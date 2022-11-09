@@ -105,11 +105,9 @@ const EditForm =({handleSubmit, item, setEditMode,turkceE,ingilizceE,}) =>{
                 
                 return obj
               })}
-              
               value={item?.ingilizce ?? ""}
               variant='standard' 
               label="İngilizce"
-              
               required
               sx={{
                 

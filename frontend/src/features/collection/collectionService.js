@@ -23,13 +23,26 @@ const createWord = async(wordPair, id, token)=>{
     }
 
     const response = await axios.put(URL+id, wordPair, config)
-    console.log(response);
+   
+    return response.data
+}
+
+const updateWord = async(wordPair, cId, wId, token)=>{
+    const config = {
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.patch(URL+ cId + "/"+ wId, wordPair, config)
+    
     return response.data
 }
 
 const arrayService = {
     fetchCollection,
-    createWord
+    createWord,
+    updateWord
 }
 
 export default arrayService

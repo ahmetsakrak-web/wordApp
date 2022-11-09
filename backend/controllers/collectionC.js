@@ -137,7 +137,7 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
     }
       
     const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
-    
+    console.log(foundIndex);
     if(foundIndex === -1) {
         res.status(404)
         throw new Error("There is no item to update.");
@@ -152,7 +152,9 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
     
     await collection.save();
 
-    res.status(201).json(collection);
+    
+
+    res.status(201).json({wordPair:req.body, foundIndex});
 });
 
 

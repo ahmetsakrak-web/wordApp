@@ -5,6 +5,7 @@ function capitalizeFirstLetter(string) {
 
 
 function numDescending(sozluk){
+  console.log(sozluk)
   if(sozluk){
     return [...sozluk].sort((a,b)=>b.id-a.id)
   }

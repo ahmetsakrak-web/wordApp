@@ -9,7 +9,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from "react-redux"
-import {getCollection, createWord, reset} from "../features/collection/collectionSlice"
+import {getCollection, createWord,updateWord, reset} from "../features/collection/collectionSlice"
 
 
 
@@ -59,17 +59,6 @@ const Create = () => {
 
 
 
-  
-  
-
-
-
-
-
-
-
-
-
    //              KELİME EKLEME -------------------------------------------------------------------------
 
   const addItem = async(e)=>{
@@ -101,21 +90,15 @@ const Create = () => {
 
 
 
-
-
-
-
    //         DÜZENLEME MODUNA ÇEVİRME -------------------------------------------------------------------------
 
   const editSwitch = async(e,id) =>{
-    const item = collection.cArray.find(element=>element.id===id)
       e.preventDefault();
 
+      const item = collection.cArray.find(element=>element.id===id)
       //5) Basılan editSwitch kendi id'sini variable alır. Değişken olarakta verileri tutar.
      setEditMode(prevState=>{
-      
       return {...prevState,[id]:{...item}}
-      
      })
   
   }
@@ -131,7 +114,11 @@ const Create = () => {
   const editItem = async(e,id) =>{
     e.preventDefault();
     //9) editMode[id] değiştirilen verileri getirir ve database kaydedilir.
-  const item = editMode[id];
+
+  const bundle = {wordPair:editMode[id], cId:collection._id,wId:id}
+  console.log(editMode[id]);
+  dispatch(updateWord(bundle));
+
   //const res = await axios.put(`http://localhost:8000/sozluk/${id}`,item)
   
   //10) databaseden gelen veriler tekrar react'a aktarılır.
@@ -160,17 +147,16 @@ const Create = () => {
 
 
 
-  const kelimeler = numDescending(collection.cArray);
+ 
+
   const addFormElement = { setIngilizce, setTurkce, turkceE, ingilizceE,ingilizce,turkce }
   
 
 
-
-if(isLoading){
+if(isLoading || !collection.cArray){
   return <h2>It's loading</h2>
 }
-
-
+else{
   return (
     <Container sx={{
       display:"flex",
@@ -192,7 +178,7 @@ if(isLoading){
 
      
       {
-         kelimeler.map((item)=> {
+         collection.cArray.map((item)=> {
         
           const editElement = { item:editMode[item.id], turkceE, ingilizceE, setEditMode }
 
@@ -232,6 +218,13 @@ if(isLoading){
     </Container>
 
   )
+
+}
+
+
+  
+
+
 }
 
 export default Create
