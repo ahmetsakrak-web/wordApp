@@ -2,6 +2,8 @@ import React from 'react'
 import { Typography,Button,TextField,Card } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { indigo } from '@mui/material/colors';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -11,6 +13,7 @@ import { indigo } from '@mui/material/colors';
 
 
 const AddForm = ({handleSubmit, setIngilizce, setTurkce,turkceE,ingilizceE,turkce,ingilizce }) => {
+  const {collection} = useSelector(state=>state.collection)
   return (
     <form  
           autoComplete='off'
@@ -20,7 +23,7 @@ const AddForm = ({handleSubmit, setIngilizce, setTurkce,turkceE,ingilizceE,turkc
       component="h2"
       color="textSecondary"
       gutterBottom>
-          Yeni Kelime 
+         {collection.cName}
       </Typography>
       
       <TextField 

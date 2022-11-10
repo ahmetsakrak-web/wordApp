@@ -101,7 +101,7 @@ const updateCollectionName = asyncHandler(async(req,res)=>{
 
 
 
-//------------------------------------------------ Collection Array POST & UPDATE & DELETE ------------------------------------
+// ------------------------------------------------ Collection Array POST & ç & DELETE ------------------------------------
 
 const postCollectionArray = asyncHandler(async(req,res)=>{
   
@@ -137,7 +137,7 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
     }
       
     const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
-    console.log(foundIndex);
+    console.log(req.body);
     if(foundIndex === -1) {
         res.status(404)
         throw new Error("There is no item to update.");
@@ -169,7 +169,7 @@ const removeCollectionArray = asyncHandler(async (req,res)=>{
           throw new Error("You're not allowed");
       }
         
-      const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
+      const foundIndex = collection.cArray.finderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrIndex(word =>word.id === req.params.word_id);
     
       if(foundIndex === -1) {
           res.status(404)

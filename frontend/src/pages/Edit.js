@@ -9,7 +9,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import { useParams, useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from "react-redux"
-import {getCollection, createWord,updateWord, reset} from "../features/collection/collectionSlice"
+import {getCollection, createWord,updateWord, reset,} from "../features/collection/collectionSlice"
 
 
 
@@ -96,10 +96,7 @@ const Create = () => {
       e.preventDefault();
 
       const item = collection.cArray.find(element=>element.id===id)
-      //5) Basılan editSwitch kendi id'sini variable alır. Değişken olarakta verileri tutar.
-     setEditMode(prevState=>{
-      return {...prevState,[id]:{...item}}
-     })
+     setEditMode(prevState=>({...prevState,[id]:{...item}}))
   
   }
 
@@ -112,33 +109,16 @@ const Create = () => {
 
 
   const editItem = async(e,id) =>{
-    e.preventDefault();
-    //9) editMode[id] değiştirilen verileri getirir ve database kaydedilir.
+        e.preventDefault();
 
-  const bundle = {wordPair:editMode[id], cId:collection._id,wId:id}
-  console.log(editMode[id]);
-  dispatch(updateWord(bundle));
+        const bundle = {wordPair:editMode[id], cId:collection._id,wId:id}
+        dispatch(updateWord(bundle));
 
-  //const res = await axios.put(`http://localhost:8000/sozluk/${id}`,item)
-  
-  //10) databaseden gelen veriler tekrar react'a aktarılır.
-  /* setSozluk(prevState=>{
-    const array = [...prevState]
-    
-    array[prevState.findIndex(e=>e.id===id)] = res.data;
-
-    return array  
-  }) */
-
-  //11) {id:{turkce:"deger",ingilizce:"value",deleted:true}} değer eklenir.
-    setEditMode(prevState=>{
-    const obj = {...prevState}
-    obj[id].deleted = true;
-
-    return obj
-    })
-
-}
+        setEditMode((prevState)=>{
+          const obj = {...prevState}
+          delete obj[id]
+          return obj})
+  }
 
 
 
@@ -149,14 +129,16 @@ const Create = () => {
 
  
 
-  const addFormElement = { setIngilizce, setTurkce, turkceE, ingilizceE,ingilizce,turkce }
+  const addFormElement = { setIngilizce, setTurkce, turkceE, ingilizceE, ingilizce, turkce }
   
 
 
 if(isLoading || !collection.cArray){
   return <h2>It's loading</h2>
 }
+
 else{
+
   return (
     <Container sx={{
       display:"flex",
@@ -165,51 +147,27 @@ else{
       gap:"20px",
       py:"2rem",
       }} >
-      
 
-
-     
       <AddForm {...addFormElement} handleSubmit={addItem}/>
-     
     
-
-
-
-
-     
-      {
-         collection.cArray.map((item)=> {
-        
+      {collection.cArray.map((item)=> {
           const editElement = { item:editMode[item.id], turkceE, ingilizceE, setEditMode }
 
            return <div key={item.id+"container"}> 
-            {/* 1)editMode'un içinde item.id adlı bir değer yok false gösterir. !False = True olduğu için direkt card'ı gösterir.
-                4)editSwitch fonksiyonuna basılır.
-                6)editMode[item.id] artık true'dur. False döndürür. False gören VE condition'u Cardı göstermez.
-             */}
-           {(!editMode[item.id] ) && <Card key={item.id} {...item} editSwitch={editSwitch} />}
-           
-           <CSSTransition 
-            unmountOnExit 
-            timeout={300} 
-            classNames="alert" 
-            /* 3)editMode[item.id]?.deleted içinde item.id adlı bir değer yok false gösterir. !False = True olduğu için sağındaki conditiona atar.
-                 conditionda: editMode[item.id] item.id adlı bir değer olmadığı için false dönderir. False olduğu için False dönderir. in devreye girmez.
-               7) editMode[item.id].deleted hala falsedir. ! işareti sebebiyle yine true döndürür. Condition'da editMode[item.id] true olduğu için true döndürür.
-               12) editMode[item.id].deleted true olur. ve ! işareti sebebiyle false döndürür.
-            */
-            in={!editMode[item.id]?.deleted && (editMode[item.id] ? true : false)} 
-            onExited={()=>setEditMode((prevState)=>{
-              const obj = {...prevState}
-              //13) false olan in yüzünden id:{} adlı değer burada silinir.
-              delete obj[item.id]
-              return obj})}> 
-                    {/* 8)editElement içinde item adlı editmode[item.id]'de verilerini tutar gösterir. editItem'a tıklanır. */}
-                  <EditForm handleSubmit={(e)=>editItem(e,item.id)} {...editElement}  key={item.id + "editform"} /> 
+                    
+                      {(!editMode[item.id] ) && <Card key={item.id} {...item} editSwitch={editSwitch} />}
+                      
+                      <CSSTransition 
+                        unmountOnExit 
+                        timeout={300} 
+                        classNames="alert"
+                        in={editMode[item.id] ? true : false}> 
 
-              </CSSTransition>
-           
-            </div>
+                            <EditForm handleSubmit={(e)=>editItem(e,item.id)} {...editElement}  key={item.id + "editform"} /> 
+
+                        </CSSTransition>
+        
+                  </div>
           
          })
       
