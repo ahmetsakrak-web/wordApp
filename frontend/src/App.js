@@ -1,17 +1,19 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Edit from "./pages/Edit"
 import {createTheme,ThemeProvider} from "@mui/material/styles"
 import { grey, blue, indigo } from '@mui/material/colors'
-import Navbar from "./components/navbar"
+import Navbar from "./components/Navbar"
 import Anasayfa from "./pages/Anasayfa"
-import Exercise from "./pages/Exercise"
 import {Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { store } from './app/store' 
 import {Provider} from "react-redux"
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+
+
+
 
 const theme = createTheme({
   palette:{
@@ -50,7 +52,8 @@ function App() {
                             <Route path='/register' element={<Register/>} />
                             <Route path='/login' element={<Login/>} />
                             <Route path='/' element={<Anasayfa/>} />
-                            <Route path='/edit/:id' element={<Edit/>} />
+                            <Route path='/anasayfa' element={<Anasayfa/>} />
+                            <Route path='/edit/:collectionId/:renk' element={<Edit/>} />
                     </Routes>
               
                 </Fragment>

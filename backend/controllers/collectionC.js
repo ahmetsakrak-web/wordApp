@@ -135,9 +135,10 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
         res.status(401);
         throw new Error("You're not allowed");
     }
-      
+    console.log("gelen id",req.body);
     const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
-    console.log(req.body);
+    
+
     if(foundIndex === -1) {
         res.status(404)
         throw new Error("There is no item to update.");
@@ -151,10 +152,10 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
     collection.cArray[foundIndex] = {...collection.cArray[foundIndex], ...req.body}
     
     await collection.save();
-
+   
     
 
-    res.status(201).json({wordPair:req.body, foundIndex});
+    res.status(201).json({wordPair:collection.cArray[foundIndex],foundIndex});
 });
 
 

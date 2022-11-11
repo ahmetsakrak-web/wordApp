@@ -26,25 +26,30 @@ body {
  
 }
 .cardLink :hover{
-  border-bottom: 2px solid aqua;
+ color: aqua;
   
  }
 
-.alert-enter {
+
+
+
+.edit-enter {
   opacity: 0;
   transform: scale(-0.5, 1);
 }
-.alert-enter-active {
+.edit-enter-active {
   opacity: 1;
   transform: scale(1);
   transition: transform 300ms;
 }
-.alert-exit {
+
+
+.edit-exit {
   opacity: 1;
   transform: scale(1);
   height: 300px;
 }
-.alert-exit-active {
+.edit-exit-active {
   height: 150px;
   transform: scale(1, 0.4);
   transition:  transform 300ms, height 300ms;

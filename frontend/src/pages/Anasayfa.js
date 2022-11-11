@@ -1,13 +1,14 @@
 import React,{useState, useEffect} from 'react'
-import { Typography, Button, Container, TextField,Box, Modal, Card,CardContent  } from '@mui/material'
+import { Typography, Button, Container, TextField,Box, Modal, Card, CardContent  } from '@mui/material'
 import {Link, useNavigate} from "react-router-dom"
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import {useSelector,useDispatch} from "react-redux"
 import {getCollections, createCollections, reset} from "../features/collections/collectionsSlice"
+import {backgroundColors} from "../components/utilities"
 
 
 
-const style = {
+const styles = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -73,33 +74,44 @@ const Anasayfa = () => {
   if(isLoading){
     return <h2>It's Loading</h2>
   }
-
+ 
 
   return (
     <Container sx={{
       display:"flex",
-      maxWidth:"900px",
       margin:"20px auto",
       alignItems:"center",
-      gap:"20px",
-      py:"2rem",
+      justifyContent:{
+        xs:"center",
+        sm:"left",
+       
+      },
+      gap:"10px",
+   
       flexWrap:"wrap"
-      }} >
+      }} 
+      maxWidth="lg"
+      >
 
       {collections.map(i=>{
+      let renk =  Math.floor(Math.random() * 10)
       
         return <Card
-          sx={{backgroundColor:"arkaplan",opacity:0.8,borderRadius:"10px",
-          transition:"all .333s ease",
-          "&:hover":{
-            opacity:1
-          }}}
+                  sx={{
+                    backgroundColor:backgroundColors[renk],
+                    opacity:0.6,
+                    borderRadius:"10px",
+                    boxShadow:12,
+                    transition:"all .333s ease",
+                    "&:hover":{
+                      backgroundColor:"secondary.dark",
+                    }}}
          key={i._id}>
        
-          <Typography sx={{textAlign:"center",p:"1rem"}} variant="h5"> {i.cName}</Typography>
-         
-          <CardContent>
-            <Link to={`/edit/${i._id}`} className="cardLink"> <Typography>Düzenle</Typography></Link>
+          <Typography sx={{textAlign:"center",p:"1rem", }} variant="h5"> {i.cName}</Typography>
+          <Typography sx={{textAlign:"center",lineHeight:"0px" }} variant="h6"> [{i.cArray.length}]</Typography>
+          <CardContent sx={{textAlign:"center"}}>
+            <Link to={`/edit/${i._id}/${renk}`} className="cardLink"> <Typography>Düzenle</Typography></Link>
             <Link to={`/exercise/${i._id}`} className="cardLink"> <Typography>Egzersiz</Typography></Link>
           </CardContent>
         
@@ -122,7 +134,7 @@ const Anasayfa = () => {
         aria-describedby="modal-modal-description"
        
       >
-                  <Box sx={style}>
+                  <Box sx={styles}>
                           <form  
                             autoComplete='off'
                             onSubmit={addsetHandle}>

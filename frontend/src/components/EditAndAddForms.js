@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography,Button,TextField,Card } from '@mui/material'
+import { Typography,Button,TextField,Card,Alert } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { indigo } from '@mui/material/colors';
 import { useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const AddForm = ({handleSubmit, setIngilizce, setTurkce,turkceE,ingilizceE,turkce,ingilizce }) => {
+const AddForm = ({setAddForm, addFormElement:{turkceE, ingilizceE, ingilizce, turkce},handleSubmit }) => {
   const {collection} = useSelector(state=>state.collection)
   return (
     <form  
@@ -25,10 +25,10 @@ const AddForm = ({handleSubmit, setIngilizce, setTurkce,turkceE,ingilizceE,turkc
       gutterBottom>
          {collection.cName}
       </Typography>
-      
+      <Alert sx={{background:"none",padding:"0px"}} severity="info">Kelimeleri düzenlemek için karta dokun</Alert>
       <TextField 
         color="primary"
-        onChange={(e)=>setIngilizce(e.target.value)}
+        onChange={(e)=>setAddForm(pS=>({...pS, ingilizce:e.target.value}))}
         variant='outlined' 
         label="İngilizce"
         value={ingilizce}
@@ -42,7 +42,7 @@ const AddForm = ({handleSubmit, setIngilizce, setTurkce,turkceE,ingilizceE,turkc
         />
         
         <TextField 
-        onChange={(e)=>setTurkce(e.target.value)}
+        onChange={(e)=>setAddForm(pS=>({...pS, turkce:e.target.value}))}
         variant='outlined' 
         label="Türkçe"
         value={turkce}
@@ -104,7 +104,7 @@ const EditForm =({handleSubmit, item, setEditMode,turkceE,ingilizceE,}) =>{
               color="primary"
               onChange={(e)=>setEditMode(prevState=>{
                 const obj = {...prevState}
-                obj[item.id].ingilizce=e.target.value
+                obj[item._id].ingilizce=e.target.value
                 
                 return obj
               })}
@@ -122,7 +122,7 @@ const EditForm =({handleSubmit, item, setEditMode,turkceE,ingilizceE,}) =>{
               <TextField 
                onChange={(e)=>setEditMode(prevState=>{
                 const obj ={...prevState}
-                obj[item.id].turkce=e.target.value
+                obj[item._id].turkce=e.target.value
                 return obj
               })}
               variant='standard' 

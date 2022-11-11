@@ -1,17 +1,17 @@
-import {Container} from '@mui/material'
 import React, { useState,useEffect } from 'react'
-import {numDescending} from "../components/utilities"
-import Card from "../components/card"
 
-import {AddForm,EditForm} from '../components/collectionForms';
+import {Box, Container} from '@mui/material'
+
+import WordPairCard from "../components/WordPairCard"
+import {AddForm, EditForm} from '../components/EditAndAddForms';
+
 import { CSSTransition } from 'react-transition-group';
 
-
 import { useParams, useNavigate } from 'react-router-dom';
-import {useSelector,useDispatch} from "react-redux"
-import {getCollection, createWord,updateWord, reset,} from "../features/collection/collectionSlice"
+import {useSelector, useDispatch} from "react-redux"
+import {getCollection, createWord, updateWord, reset} from "../features/collection/collectionSlice"
 
-
+import axios from "axios"
 
 
 
@@ -19,7 +19,7 @@ import {getCollection, createWord,updateWord, reset,} from "../features/collecti
 const Create = () => {
 
 
-  const { id } = useParams();
+  const { collectionId, renk } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,13 +28,11 @@ const Create = () => {
   const {collection, isError, isLoading, message} = useSelector(state=>state.collection)
   
 
- 
-  const [turkce, setTurkce] = useState("");
-  const [ingilizce, setIngilizce] = useState("");
-  const [turkceE, setTurkceE] = useState(false);
-  const [ingilizceE, setIngilizceE] = useState(false);
+  const [{turkce,ingilizce,ingilizceE,turkceE}, setAddForm] = useState({turkce:"", ingilizce:"", ingilizceE:false, turkceE:false});
+
   const [editMode, setEditMode] = useState({});
   
+
   
 
   useEffect(()=>{
@@ -46,14 +44,14 @@ const Create = () => {
       navigate("/login")
     }
 
-    dispatch(getCollection(id))
+    dispatch(getCollection(collectionId))
 
    
     return ()=>{
       dispatch(reset())
     }
    
-  },[user,navigate,isError,message,dispatch])
+  },[user,navigate,isError,message,dispatch, collectionId])
   
 
 
@@ -64,23 +62,16 @@ const Create = () => {
   const addItem = async(e)=>{
     e.preventDefault();
     if(turkce && ingilizce){
-      setIngilizceE(false);
-      setTurkceE(false);
-      const bundle = [{ingilizce,turkce},id] 
-
+      setAddForm(pS=>({...pS, ingilizceE:false, turkceE:false}))
+      const bundle = [{ingilizce,turkce},collectionId] 
       dispatch(createWord(bundle))
-
-   
-
-     setIngilizce("");
-     setTurkce("");
-    
+      setAddForm(pS=>({...pS, ingilizce:"", turkce:""}))
     }
     if(turkce === ""){
-      setTurkceE(true);
+      setAddForm(pS=>({...pS, turkceE:false}))
     }
     if(ingilizce === ""){
-      setIngilizceE(true);
+      setAddForm(pS=>({...pS, ingilizceE:false}))
     }
    
   }
@@ -92,11 +83,11 @@ const Create = () => {
 
    //         DÜZENLEME MODUNA ÇEVİRME -------------------------------------------------------------------------
 
-  const editSwitch = async(e,id) =>{
+  const editSwitch = async(e,_id) =>{
       e.preventDefault();
-
-      const item = collection.cArray.find(element=>element.id===id)
-     setEditMode(prevState=>({...prevState,[id]:{...item}}))
+      console.log(_id)
+      const item = collection.cArray.find(element=>element._id===_id)
+     setEditMode(pS=>({...pS,[_id]:{...item}}))
   
   }
 
@@ -108,19 +99,27 @@ const Create = () => {
    //              KELİME DEĞİŞTİRME 
 
 
-  const editItem = async(e,id) =>{
+  const editItem = async(e,_id) =>{
         e.preventDefault();
 
-        const bundle = {wordPair:editMode[id], cId:collection._id,wId:id}
-        dispatch(updateWord(bundle));
+        const config = {
+          headers:{
+              Authorization: `Bearer ${user.token}`
+          }
+        }
+        console.log(editMode);
+      const {data} = await axios.patch("/api/collections/"+ collectionId + "/"+ _id, {...editMode[_id]}, config)
+      
 
-        setEditMode((prevState)=>{
-          const obj = {...prevState}
-          delete obj[id]
-          return obj})
+        dispatch(updateWord(data));
+
+        setEditMode((pS)=>{
+          const pSClone = {...pS}
+          delete pSClone[_id]
+          return pSClone})
   }
 
-
+ 
 
 
 
@@ -129,7 +128,7 @@ const Create = () => {
 
  
 
-  const addFormElement = { setIngilizce, setTurkce, turkceE, ingilizceE, ingilizce, turkce }
+ 
   
 
 
@@ -140,34 +139,39 @@ if(isLoading || !collection.cArray){
 else{
 
   return (
-    <Container sx={{
-      display:"flex",
-      flexDirection:"column",
-      alignItems:"center",
-      gap:"20px",
-      py:"2rem",
-      }} >
+    <Container maxWidth="md" >
 
-      <AddForm {...addFormElement} handleSubmit={addItem}/>
+      <AddForm 
+      setAddForm={setAddForm} 
+      addFormElement={{ turkceE, ingilizceE, ingilizce, turkce }} 
+      handleSubmit={addItem}/>
     
       {collection.cArray.map((item)=> {
-          const editElement = { item:editMode[item.id], turkceE, ingilizceE, setEditMode }
+          const editElement = { item:editMode[item._id], turkceE, ingilizceE, setEditMode, }
 
-           return <div key={item.id+"container"}> 
+           return <Box sx={{
+                            display:"flex",
+                            flexDirection:"column-reverse",
+                            justifyContent:"center",
+                            alignItems:"center",
+                            my:"1rem",
+                        
+                          }} 
+                          key={item._id+"container"}> 
                     
-                      {(!editMode[item.id] ) && <Card key={item.id} {...item} editSwitch={editSwitch} />}
-                      
+                      {(!editMode[item._id] ) && <WordPairCard key={item._id}  {...item} renk={renk} editSwitch={editSwitch} />}
+                                                            
                       <CSSTransition 
                         unmountOnExit 
                         timeout={300} 
-                        classNames="alert"
-                        in={editMode[item.id] ? true : false}> 
-
-                            <EditForm handleSubmit={(e)=>editItem(e,item.id)} {...editElement}  key={item.id + "editform"} /> 
+                        classNames="edit"
+                        in={(editMode[item._id] || editMode[item._id] )? true : false}> 
+                        
+                            <EditForm handleSubmit={(e)=>editItem(e,item._id) } {...editElement}  key={item._id + "editform"} /> 
 
                         </CSSTransition>
         
-                  </div>
+                  </Box>
           
          })
       

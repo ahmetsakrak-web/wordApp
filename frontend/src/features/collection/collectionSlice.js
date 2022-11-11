@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import collectionService  from "./collectionService"
 
+
 const initialState ={
     collection:{},
     isError:false,
@@ -36,7 +37,7 @@ export const createWord = createAsyncThunk("collection/createWord", async(bundle
 
 
 
-export const updateWord = createAsyncThunk("collection/updateWord", async(bundle, thunkAPI)=>{
+/* export const updateWord = createAsyncThunk("collection/updateWord", async(bundle, thunkAPI)=>{
     try {
        
         const {wordPair, cId, wId} = bundle
@@ -49,7 +50,7 @@ export const updateWord = createAsyncThunk("collection/updateWord", async(bundle
         return thunkAPI.rejectWithValue(message)
     }
     
-})
+}) */
 
 
 
@@ -59,6 +60,11 @@ const collectionSlice = createSlice({
     name:"collection",
     reducers:{
         reset:(state)=>initialState,
+        updateWord:(state,action)=>{
+      
+        state.collection.cArray[action.payload.foundIndex] = action.payload.wordPair
+        
+        },
     },
     extraReducers:(builder)=>{
         builder
@@ -69,10 +75,6 @@ const collectionSlice = createSlice({
                 state.isLoading=false
                 state.isSucces=true
 
-                action.payload.cArray.forEach(element => {
-                    element.id =element._id
-                    delete element._id
-                });
                 
                 state.collection=action.payload
              
@@ -95,7 +97,7 @@ const collectionSlice = createSlice({
                 state.isError=true
                 state.message=action.payload
             })
-            .addCase(updateWord.pending,(state)=>{
+          /*   .addCase(updateWord.pending,(state)=>{
                 state.isLoading=true
             })
             .addCase(updateWord.fulfilled, (state,action)=>{
@@ -108,13 +110,13 @@ const collectionSlice = createSlice({
                 state.isLoading=false
                 state.isError=true
                 state.message=action.payload
-            })
+            }) */
     }
 
 })
 
 
 
-export const { reset } = collectionSlice.actions
+export const { reset, updateWord } = collectionSlice.actions
 export default collectionSlice.reducer
 

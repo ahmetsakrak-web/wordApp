@@ -1,23 +1,31 @@
 import React from 'react'
-import { Typography,Divider } from '@mui/material'
+import { Typography, Card } from '@mui/material'
 import { indigo } from '@mui/material/colors';
-import {capitalizeFirstLetter} from "../components/utilities"
+import {capitalizeFirstLetter, backgroundColors} from "./utilities"
 
 
-const Card = ({ingilizce,turkce,editSwitch,id}) => {
+const WordPairCard = ({ingilizce,turkce,editSwitch,renk,_id}) => {
+  
+   
    
   return (
-    <Divider  onClick={(e)=>editSwitch(e,id)}  sx={{
-        border:`5px solid ${indigo[600]}`,
+    <Card  onClick={(e)=>editSwitch(e,_id)}  sx={{
         borderRadius:"20px",
-        padding:"0.5rem 0.5rem",
-        backgroundColor:indigo[600],
+        padding:"1rem",
+        mx:"10px",
+        backgroundColor:backgroundColors[renk],
         width:"310px",
-        
+        opacity:0.6,
+        "&:hover":{
+        background:indigo[500],
+        cursor:"pointer"
+    },
+    
     }}>
                 <Typography sx={{
                     whiteSpace:"normal",
                     maxWidth:"300px",
+                    textAlign:"center",
                     wordBreak: "break-all",
                 }} 
                 fontWeight="fontWeightBold" 
@@ -33,7 +41,6 @@ const Card = ({ingilizce,turkce,editSwitch,id}) => {
                 whiteSpace:"normal",
                 textAlign:"center",
                 minWidth:"300px", 
-                
                 }}
                 color="turkceRenk" 
                 variant='body1'
@@ -41,8 +48,8 @@ const Card = ({ingilizce,turkce,editSwitch,id}) => {
                     {turkce}
                     
                 </Typography>
-  </Divider>
+  </Card>
   )
 }
 
-export default Card
+export default WordPairCard
