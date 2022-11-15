@@ -53,7 +53,7 @@ function App() {
                             <Route path='/login' element={<Login/>} />
                             <Route path='/' element={<Anasayfa/>} />
                             <Route path='/anasayfa' element={<Anasayfa/>} />
-                            <Route path='/edit/:collectionId/:renk' element={<Edit/>} />
+                            <Route path='/edit/:collectionId' element={<Edit/>} />
                     </Routes>
               
                 </Fragment>

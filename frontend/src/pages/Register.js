@@ -5,8 +5,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
 import { register, reset } from '../features/auth/authSlice'
-import Spinner  from "../components/Spinner"
-
+import { CollectionsLoader } from '../components/Loaders';
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 
@@ -66,7 +65,7 @@ export const Register = () => {
     }
 
     if(isLoading){
-        return <Spinner />
+        return <CollectionsLoader />
     }
 
     return (

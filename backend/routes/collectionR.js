@@ -7,7 +7,8 @@ const {
     removeCollection,
     updateCollectionName,
     updateCollectionArray,
-    removeCollectionArray
+    removeCollectionArray,
+    putColor,
 } = require("../controllers/collectionC");
 const routeProtector = require("../middlewares/authMiddleware");
 
@@ -25,6 +26,8 @@ route.route("/:id")
 route.route("/:id/:word_id")
     .patch(routeProtector, updateCollectionArray)
     .delete(routeProtector, removeCollectionArray);
+
+route.route("/color/:id").put(routeProtector,putColor)
 
 
     

@@ -15,18 +15,26 @@ function numDescending(sozluk){
   
 } */
 
-const backgroundColors= {
-  1:{background:"red"},
-  2:{background:"#333"},
-  3:{background:"green"},
-  4:{background:"orange"},
-  5:{background:"#153462"},
-  6:{background:"purple"},
-  7:{background:"#D6E4E5"},
-  8:{background:"black"},
-  9:{background:"brown"},
-  0:{background:"pink"},
+const backgroundColors= [
+    {background:"red"},
+    {background:"black"},
+    {background:"#333"},
+    {background:"green"},
+    {background:"orange"},
+    {background:"#153462"},
+    {background:"purple"},
+    {background:"brown"},
+    {background:"#c54c82"}
+]
+
+const configBearer =(token)=> {
+      return  {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+      }
+ 
 }
 
-export {capitalizeFirstLetter, backgroundColors}
+export {capitalizeFirstLetter, backgroundColors,configBearer}
 

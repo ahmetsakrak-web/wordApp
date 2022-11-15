@@ -20,10 +20,10 @@ export const getCollections = createAsyncThunk("collections/fetch",async(_, thun
     
 })
 
-export const createCollections = createAsyncThunk("collections/createCName",async(cName,thunkAPI)=>{
+export const createCollections = createAsyncThunk("collections/createCName", async(collectionName,thunkAPI)=>{
     try {
         const token = thunkAPI.getState().auth.user.token
-        return await collectionService.createCollection(cName, token)
+        return await collectionService.createCollection(collectionName, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -39,6 +39,10 @@ const collectionSlice = createSlice({
     name:"collections",
     reducers:{
         reset:(state)=>initialState,
+        updateColor:(state,action)=>{
+
+            state.collections[action.payload.foundIndex].color = action.payload.color
+        },
     },
     extraReducers:(builder)=>{
         builder
@@ -74,6 +78,6 @@ const collectionSlice = createSlice({
 
 
 
-export const { reset } =collectionSlice.actions
+export const { reset, updateColor } =collectionSlice.actions
 export default collectionSlice.reducer
 

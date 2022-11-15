@@ -46,16 +46,27 @@ body {
 
 .edit-exit {
   opacity: 1;
-  transform: scale(1);
+  
+  transform: translate(0px, 0px);
   height: 300px;
 }
 .edit-exit-active {
-  height: 150px;
-  transform: scale(1, 0.4);
-  transition:  transform 300ms, height 300ms;
+  opacity: 0;
+ 
+  transform: translate(00px, -100px);
+  transition:  all 300ms;
 
+}
+.cardAnime{
+  animation-name: example;
+  animation-duration: 1s;
+ 
+ 
 }
 
 
 
-
+@keyframes example {
+  from { transform: scale(0) }
+  to {transform: scale(1) }
+}

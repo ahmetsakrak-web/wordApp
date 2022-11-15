@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { login,reset } from '../features/auth/authSlice';
 import { useSelector, useDispatch} from "react-redux"
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../components/Spinner';
+import { CollectionsLoader } from '../components/Loaders';
 
 
 export const Login = () => {
@@ -57,7 +57,7 @@ useEffect(()=>{
 },[user, isError, isSuccess, message, navigator, dispatch])
 
 if(isLoading){
-    return <Spinner />
+    return  <CollectionsLoader />
 }
 
 

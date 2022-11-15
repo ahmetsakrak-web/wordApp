@@ -22,35 +22,9 @@ export const getCollection = createAsyncThunk("collection/fetch",async(Cid, thun
     
 })
 
-export const createWord = createAsyncThunk("collection/createWord", async(bundle, thunkAPI)=>{
-    try {
-        const [wordPair, id] = bundle
-       const token = thunkAPI.getState().auth.user.token
-       
-       return await collectionService.createWord(wordPair, id, token)
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-        return thunkAPI.rejectWithValue(message)
-    }
-    
-})
 
 
 
-/* export const updateWord = createAsyncThunk("collection/updateWord", async(bundle, thunkAPI)=>{
-    try {
-       
-        const {wordPair, cId, wId} = bundle
-       const token = thunkAPI.getState().auth.user.token
-       
-       return await collectionService.updateWord(wordPair, cId, wId, token)
-
-    } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-        return thunkAPI.rejectWithValue(message)
-    }
-    
-}) */
 
 
 
@@ -65,6 +39,11 @@ const collectionSlice = createSlice({
         state.collection.cArray[action.payload.foundIndex] = action.payload.wordPair
         
         },
+        createWord:(state, action)=>{
+            
+            state.collection.cArray.unshift(action.payload)
+        },
+      
     },
     extraReducers:(builder)=>{
         builder
@@ -84,39 +63,12 @@ const collectionSlice = createSlice({
                 state.isError=true
                 state.message=action.payload
             })
-            .addCase(createWord.pending,(state)=>{
-                state.isLoading=true
-            })
-            .addCase(createWord.fulfilled, (state,action)=>{
-                state.isLoading=false
-                state.isSucces=true
-                state.collection.cArray.push(action.payload)
-            })
-            .addCase(createWord.rejected,(state,action)=>{
-                state.isLoading=false
-                state.isError=true
-                state.message=action.payload
-            })
-          /*   .addCase(updateWord.pending,(state)=>{
-                state.isLoading=true
-            })
-            .addCase(updateWord.fulfilled, (state,action)=>{
-                state.isLoading=false
-                state.isSucces=true
-               
-                state.collection.cArray[action.payload.foundIndex] = action.payload.wordPair
-            })
-            .addCase(updateWord.rejected,(state,action)=>{
-                state.isLoading=false
-                state.isError=true
-                state.message=action.payload
-            }) */
     }
 
 })
 
 
 
-export const { reset, updateWord } = collectionSlice.actions
+export const { reset, updateWord, createWord } = collectionSlice.actions
 export default collectionSlice.reducer
 

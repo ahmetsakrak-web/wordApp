@@ -53,6 +53,7 @@ const postCollectionName = asyncHandler(async(req,res)=>{
     const collection = await Collection.create({
         cName:req.body.collectionName,
         cArray:[],
+        color:req.body.color,
         user:req.user.id
     })
 
@@ -118,11 +119,12 @@ const postCollectionArray = asyncHandler(async(req,res)=>{
     }
     
 
-    collection.cArray.push(req.body);
+    collection.cArray.unshift(req.body);
 
     await collection.save();
+    const wordPair = collection.cArray.find(element=> element.ingilizce === req.body.ingilizce);
 
-    res.status(201).json(req.body);
+    res.status(201).json(wordPair);
 })
 
 
@@ -170,7 +172,7 @@ const removeCollectionArray = asyncHandler(async (req,res)=>{
           throw new Error("You're not allowed");
       }
         
-      const foundIndex = collection.cArray.finderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrIndex(word =>word.id === req.params.word_id);
+      const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
     
       if(foundIndex === -1) {
           res.status(404)
@@ -184,6 +186,35 @@ const removeCollectionArray = asyncHandler(async (req,res)=>{
   
 });
 
+const putColor = asyncHandler(async(req,res)=>{
+    const collection = await Collection.findById(req.params.id);
+    
+    const collections = await Collection.find({user:req.user.id});
+    
+
+    const foundIndex = collections.findIndex(c=>c.id === req.params.id)
+    
+    if(foundIndex === -1 || undefined) {
+        res.status(404)
+        throw new Error("There is no item to change it's color.");
+    }
+
+    if(collection.user.toString() !== req.user.id){
+        res.status(401);
+        throw new Error("You're not allowed");
+    }
+    
+    collection.color = req.body.color
+
+    await collection.save();
+
+    res.json({color:collection.color, foundIndex});
+
+})
+
+
+
+
 
 
 module.exports = {
@@ -195,5 +226,7 @@ module.exports = {
     removeCollection,
     updateCollectionArray,
     removeCollectionArray,
-    
+    putColor,
+   
+
 }
