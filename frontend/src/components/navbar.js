@@ -37,7 +37,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 
-export default function Sidebar(props) {
+export const  Navbar=()=> {
+  
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();

@@ -1,10 +1,9 @@
-import { Fragment } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Edit from "./pages/Edit"
 import {createTheme,ThemeProvider} from "@mui/material/styles"
 import { grey, blue, indigo } from '@mui/material/colors'
-import Navbar from "./components/Navbar"
 import Anasayfa from "./pages/Anasayfa"
+import { Navbar } from './components/navbar'
 import {Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { store } from './app/store' 
@@ -47,8 +46,8 @@ function App() {
           <ThemeProvider theme={theme}>
           
             <BrowserRouter>
-              <Fragment>
-                    <Navbar />
+              <Navbar />
+            
                     <Routes>
                             <Route path='/register' element={<Register/>} />
                             <Route path='/login' element={<Login/>} />
@@ -57,7 +56,7 @@ function App() {
                             <Route path='/edit/:collectionId' element={<Edit/>} />
                     </Routes>
               
-                </Fragment>
+               
             </BrowserRouter>
           <ToastContainer />
           </ThemeProvider>
