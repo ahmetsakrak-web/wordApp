@@ -61,9 +61,9 @@ export default function Sidebar(props) {
   }
 
   return (
-    <Box sx={{ display: 'flex', backgroundColor:"secondary.main" }}>
+    <Box sx={{  backgroundColor:"secondary.main", display:"flex", alignItems:"center"}}>
       
-      <Toolbar>
+      <Toolbar  >
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -78,9 +78,9 @@ export default function Sidebar(props) {
           >
             <MenuIcon />
           </IconButton>
-         <Typography color="primary.light">Word App</Typography>
         </Toolbar>
-
+        <Link to={`/`} className="link"><Typography>Word App</Typography></Link>
+       
       <Drawer
         sx={{
           width: drawerWidth,
@@ -96,8 +96,8 @@ export default function Sidebar(props) {
         open={open}
       >
        
-        <DrawerHeader>
-           <Typography sx={{textAlign:"center"}}>MENU</Typography> 
+        <DrawerHeader >
+           <Typography sx={{mx:"auto",fontSize:"23px"}}> {user.username} </Typography> 
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -107,13 +107,13 @@ export default function Sidebar(props) {
          {/* Links  */}
         {
         user ? (
-        <ListItem sx={{display:"flex",flexDirection:"column"}}>
-            <Link to={`/anasayfa`} className="navLink"> <Typography>Anasayfa</Typography></Link>
-            <Link to={`/`} className="navLink"><Typography>Düzenleme</Typography></Link>
-            <Button onClick={onLogout} variant='text'>Çıkış</Button>
+        <ListItem sx={{display:"flex", flexDirection:"column"}}>
+            <Link to={`/`} className="navLink"><Typography>Anasayfa</Typography></Link>
+            
+            <Typography sx={{cursor:"pointer", textAlign: "center", width:"100%","&:hover":{"border-right": "2px solid aqua"}}}  onClick={onLogout}>Çıkış</Typography>
          </ListItem> 
          ) :
-       (<ListItem sx={{display:"flex",flexDirection:"column"}}>
+       (<ListItem sx={{display:"flex", flexDirection:"column"}}>
           <Link to={`/login`} className="navLink"> <Typography>Giriş</Typography></Link>
           <Link to={`/register`} className="navLink"><Typography>Kayıt Ol</Typography></Link>
         </ListItem>) 

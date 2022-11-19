@@ -13,10 +13,28 @@ body {
   font-size: 20px;
   width: 100%;
   text-align: center;
+  transition: .333s all ease;
 }
 .navLink :hover{
  border-right: 2px solid aqua;
 }
+
+
+
+.link{
+  text-decoration: none;
+  color: white;
+  
+  font-size: 20px;
+  
+  transition: .333s all ease;
+}
+.link :hover{
+ color: aqua;
+}
+
+
+
 .cardLink{
   text-decoration: none;
   color: white;
@@ -30,7 +48,9 @@ body {
   
  }
 
-
+.form{
+  width: 100%;
+}
 
 
 .edit-enter {

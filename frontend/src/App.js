@@ -11,6 +11,7 @@ import { store } from './app/store'
 import {Provider} from "react-redux"
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import Exercise from './pages/Exercise'
 
 
 
@@ -18,8 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const theme = createTheme({
   palette:{
 
-    turkceRenk:blue[300],
-    ingilizceRenk:grey[200],
+    aciklamaRenk:blue[300],
+    kelimeRenk:grey[200],
     arkaplan:indigo[600],
     mode:"dark",
    secondary:{
@@ -52,7 +53,7 @@ function App() {
                             <Route path='/register' element={<Register/>} />
                             <Route path='/login' element={<Login/>} />
                             <Route path='/' element={<Anasayfa/>} />
-                            <Route path='/anasayfa' element={<Anasayfa/>} />
+                            <Route path='/exercise/:collectionId' element={<Exercise/>} />
                             <Route path='/edit/:collectionId' element={<Edit/>} />
                     </Routes>
               

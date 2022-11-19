@@ -10,8 +10,8 @@ const collectionSchema = new Schema({
     cName:String,
     color:String,
     cArray:[{
-        turkce: String,
-        ingilizce:String,
+        word: String,
+        definition:String,
         
     }]
 });

@@ -3,7 +3,7 @@ const Collection = require("../models/collectionM")
 const User = require("../models/userM")
 
 
-// ------------------------------------- Collections and Collection GET & DELETE --------------------------
+// ------------------------------------- Collections GET    and    Collection GET & DELETE ------------------------------------------------------
 
 const getCollections = asyncHandler(async(req,res)=>{
 
@@ -36,13 +36,13 @@ const removeCollection = asyncHandler(async(req,res)=>{
     }
 
     await collection.remove();
-    res.status(200).json({id:req.params.id})
+    res.status(200).json({_id:req.params.id})
 })
 
 
 
 
-//------------------------------------------------ Collection Name POST & UPDATE ------------------------------------
+//------------------------------------------------ Collection Name POST & UPDATE   and   Collection Color UPDATE ------------------------------------
 
 const postCollectionName = asyncHandler(async(req,res)=>{
    
@@ -86,7 +86,7 @@ const updateCollectionName = asyncHandler(async(req,res)=>{
 
 
     collection.cName = req.body.collectionName;
-
+    
     await collection.save();
 
     res.json(collection.cName);
@@ -95,6 +95,31 @@ const updateCollectionName = asyncHandler(async(req,res)=>{
 
 
 
+const putColor = asyncHandler(async(req,res)=>{
+    const collection = await Collection.findById(req.params.id);
+    
+    const collections = await Collection.find({user:req.user.id});
+    
+
+    const foundIndex = collections.findIndex(c=>c.id === req.params.id)
+    
+    if(foundIndex === -1 || undefined) {
+        res.status(404)
+        throw new Error("There is no item to change it's color.");
+    }
+
+    if(collection.user.toString() !== req.user.id){
+        res.status(401);
+        throw new Error("You're not allowed");
+    }
+    
+    collection.color = req.body.color
+
+    await collection.save();
+
+    res.json({color:collection.color, foundIndex});
+
+})
 
 
 
@@ -102,13 +127,15 @@ const updateCollectionName = asyncHandler(async(req,res)=>{
 
 
 
-// ------------------------------------------------ Collection Array POST & ç & DELETE ------------------------------------
+
+
+// ------------------------------------------------ Collection Array POST & UPDATE & DELETE ------------------------------------
 
 const postCollectionArray = asyncHandler(async(req,res)=>{
   
     const collection = await Collection.findById(req.params.id)
   
-    if(!req.body.turkce || !req.body.ingilizce){
+    if(!req.body.word || !req.body.definition){
         res.status(400)
         throw new Error("Parameters are wrong or both of them are empty")
     }
@@ -120,9 +147,9 @@ const postCollectionArray = asyncHandler(async(req,res)=>{
     
 
     collection.cArray.unshift(req.body);
-
+   
     await collection.save();
-    const wordPair = collection.cArray.find(element=> element.ingilizce === req.body.ingilizce);
+    const wordPair = collection.cArray.find(element=> element.word === req.body.word);
 
     res.status(201).json(wordPair);
 })
@@ -137,7 +164,7 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
         res.status(401);
         throw new Error("You're not allowed");
     }
-    console.log("gelen id",req.body);
+   
     const foundIndex = collection.cArray.findIndex(word =>word.id === req.params.word_id);
     
 
@@ -146,7 +173,7 @@ const updateCollectionArray = asyncHandler(async (req,res)=>{
         throw new Error("There is no item to update.");
     }
 
-    if(!req.body.turkce || !req.body.ingilizce){
+    if(!req.body.definition || !req.body.word){
         res.status(400);
         throw new Error("Parameters are wrong or both of them are empty");
     }
@@ -181,36 +208,12 @@ const removeCollectionArray = asyncHandler(async (req,res)=>{
       collection.cArray.splice(foundIndex,1);
 
       await collection.save();
-      res.json(collection);
+
+      res.json({foundIndex});
 
   
 });
 
-const putColor = asyncHandler(async(req,res)=>{
-    const collection = await Collection.findById(req.params.id);
-    
-    const collections = await Collection.find({user:req.user.id});
-    
-
-    const foundIndex = collections.findIndex(c=>c.id === req.params.id)
-    
-    if(foundIndex === -1 || undefined) {
-        res.status(404)
-        throw new Error("There is no item to change it's color.");
-    }
-
-    if(collection.user.toString() !== req.user.id){
-        res.status(401);
-        throw new Error("You're not allowed");
-    }
-    
-    collection.color = req.body.color
-
-    await collection.save();
-
-    res.json({color:collection.color, foundIndex});
-
-})
 
 
 

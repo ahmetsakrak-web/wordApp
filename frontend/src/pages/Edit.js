@@ -38,7 +38,7 @@ const Create = () => {
     if(!user){
       navigate("/login")
     }
-
+    
     dispatch(getCollection(collectionId))
 
    
@@ -46,7 +46,7 @@ const Create = () => {
       dispatch(reset())
     }
    
-  },[user,navigate,isError,message,dispatch, collectionId])
+  },[user,navigate,isError,message, dispatch, collectionId])
   
 
 
@@ -54,12 +54,12 @@ const Create = () => {
   return (
     <Container maxWidth="md" >
      
-      <AddForm />
+        <AddForm />
     
       {
         (isLoading || !collection.cArray) 
                 ? 
-        ( <WordPairLoader/>)
+        (<WordPairLoader/>)
                 :
       
         (
@@ -67,7 +67,13 @@ const Create = () => {
        
   
             
-                return <Box sx={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", my:"1rem"}} key={wordPair._id + "container"}> 
+                return <Box sx={{
+                  display:"flex", 
+                  flexDirection:"column", 
+                  justifyContent:"center", 
+                  alignItems:"center", 
+                  my:"1rem"
+                  }} key={wordPair._id + "container"}> 
                           
                             {(!editMode[wordPair._id] ) && <WordPairCard setEditMode={setEditMode} key={wordPair._id}  {...wordPair}  />}
                                                                   
@@ -79,10 +85,10 @@ const Create = () => {
                             </CSSTransition>
               
                         </Box>
-          }))
-      
+          })
+        )
       }
-     
+    
     </Container>
 
   )

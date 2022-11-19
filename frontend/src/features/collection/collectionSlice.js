@@ -43,6 +43,26 @@ const collectionSlice = createSlice({
             
             state.collection.cArray.unshift(action.payload)
         },
+        deleteWord:(state, action)=>{
+      
+            state.collection.cArray.splice(action.payload.foundIndex, 1);
+        },
+        rArrayDelete:(state)=>{
+            state.collection.rArray.splice(0, 1);
+        },
+        randomizeArray:(state, action)=>{
+            let randomArray=[];
+            const cArray= [...action.payload]
+            for(let i = 0;i< action.payload.length;i++) {
+              const deger = Math.floor(Math.random() * cArray.length)
+              randomArray =[...randomArray, cArray[deger]]
+              cArray.splice(deger,1)
+            }
+            state.collection.rArray = randomArray
+        },
+        addWordToRandomArray:(state, action)=>{
+            state.collection.rArray.push(action.payload)
+        },
       
     },
     extraReducers:(builder)=>{
@@ -53,10 +73,7 @@ const collectionSlice = createSlice({
             .addCase(getCollection.fulfilled, (state,action)=>{
                 state.isLoading=false
                 state.isSucces=true
-
-                
                 state.collection=action.payload
-             
             })
             .addCase(getCollection.rejected,(state,action)=>{
                 state.isLoading=false
@@ -69,6 +86,6 @@ const collectionSlice = createSlice({
 
 
 
-export const { reset, updateWord, createWord } = collectionSlice.actions
+export const { reset, updateWord, createWord, deleteWord, rArrayDelete, randomizeArray, addWordToRandomArray } = collectionSlice.actions
 export default collectionSlice.reducer
 

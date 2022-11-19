@@ -1,14 +1,11 @@
 import axios from "axios"
-import { configBearer } from "../../components/utilities"
+import { configBearer, URL_COLLECTION } from "../../components/utilities"
 
-
-const URL = "/api/collections/"
 
 
 const fetchCollection = async(Cid, token)=>{
    
-
-    const response = await axios.get(URL+Cid, configBearer(token))
+    const response = await axios.get(URL_COLLECTION + Cid, configBearer(token))
 
     return response.data
 }

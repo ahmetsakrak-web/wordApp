@@ -31,6 +31,17 @@ export const createCollections = createAsyncThunk("collections/createCName", asy
     
 })
 
+export const deleteCollectionThunk = createAsyncThunk("collections/deleteCollection", async(cId, thunkAPI)=>{
+    try {
+        const token = thunkAPI.getState().auth.user.token
+        return await collectionService.deleteCollection(cId, token)
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+    
+})
+
 
 
 
@@ -40,9 +51,12 @@ const collectionSlice = createSlice({
     reducers:{
         reset:(state)=>initialState,
         updateColor:(state,action)=>{
-
             state.collections[action.payload.foundIndex].color = action.payload.color
         },
+        updateName:(state, action)=>{
+            const foundIndex = state.collections.findIndex(collection=>collection._id === action.payload.cId);
+            state.collections[foundIndex].cName = action.payload.cName
+        }
     },
     extraReducers:(builder)=>{
         builder
@@ -72,12 +86,26 @@ const collectionSlice = createSlice({
                 state.isError=true
                 state.message=action.payload
             })
+            .addCase(deleteCollectionThunk.pending,(state)=>{
+                state.isLoading=true
+            })
+            .addCase(deleteCollectionThunk.fulfilled, (state,action)=>{
+                state.isLoading=false
+                state.isSucces=true
+                const collections = state.collections.filter(collection => collection._id !== action.payload._id)
+                state.collections = collections
+            })
+            .addCase(deleteCollectionThunk.rejected,(state,action)=>{
+                state.isLoading=false
+                state.isError=true
+                state.message=action.payload
+            })
     }
 
 })
 
 
 
-export const { reset, updateColor } =collectionSlice.actions
+export const { reset, updateColor, updateName } =collectionSlice.actions
 export default collectionSlice.reducer
 
