@@ -97,7 +97,7 @@ export default function Sidebar(props) {
       >
        
         <DrawerHeader >
-           <Typography sx={{mx:"auto",fontSize:"23px"}}> {user.username} </Typography> 
+           <Typography sx={{mx:"auto",fontSize:"23px"}}>{user ? user.username :"MENÜ"}</Typography> 
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>

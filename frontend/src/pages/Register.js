@@ -97,25 +97,25 @@ export const Register = () => {
             </Typography>
 
 
-              <TextField id="standard-basic" label="İsim" variant="standard" name="name" type="text" value={name} onChange={onChange}
+              <TextField  label="İsim" variant="standard" name="name" type="text" value={name} onChange={onChange}
               sx={{
                   mt:"20px",
                   width:"100%",
               }}
               />
-                <TextField id="standard-basic" label="Email" variant="standard"  name='email' type="email" value={email} onChange={onChange}
+                <TextField label="Email" variant="standard"  name='email' type="email" value={email} onChange={onChange}
               sx={{
                   mt:"20px",
                   width:"100%"
               }}
               />
-               <TextField id="standard-basic" label="Şifre" variant="standard"  name='password' type="password" value={password} onChange={onChange}
+               <TextField  label="Şifre" variant="standard"  name='password' type="password" value={password} onChange={onChange}
               sx={{
                   mt:"20px",
                   width:"100%"
               }}
               />
-               <TextField id="standard-basic" label="Şifreyi Tekrar Girin" variant="standard"  name='password2' type="password" value={password2} onChange={onChange}
+               <TextField label="Şifreyi Tekrar Girin" variant="standard"  name='password2' type="password" value={password2} onChange={onChange}
               sx={{
                   mt:"20px",
                   width:"100%"

@@ -88,7 +88,7 @@ if(isLoading){
            <Typography  sx={{textAlign:"center",fontSize:"25px", color:"primary.light"}}>
                 Word App
            </Typography>
-            <TextField type="email" id="standard-basic" label="Email" variant="standard" name='email' value={email} onChange={onChange}
+            <TextField type="email"  label="Email" variant="standard" name='email' value={email} onChange={onChange}
             sx={{
                 mt:"20px",
                 width:"100%",
@@ -96,7 +96,7 @@ if(isLoading){
                 
             }}
             />
-              <TextField id="standard-basic" label="Şifre" variant="standard"  name='password' type="password" value={password} onChange={onChange}
+              <TextField label="Şifre" variant="standard"  name='password' type="password" value={password} onChange={onChange}
             sx={{
                 mt:"50px",
                 width:"100%"
