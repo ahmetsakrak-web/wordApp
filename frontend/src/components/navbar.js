@@ -10,7 +10,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Link} from "react-router-dom"
 import ListItem from '@mui/material/ListItem';
-import {Button, Typography } from '@mui/material';
+import {Typography } from '@mui/material';
 import { mylogout, reset } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
@@ -63,7 +63,7 @@ export default function Sidebar(props) {
   return (
     <Box sx={{  backgroundColor:"secondary.main", display:"flex", alignItems:"center"}}>
       
-      <Toolbar  >
+      <Toolbar >
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -110,7 +110,7 @@ export default function Sidebar(props) {
         <ListItem sx={{display:"flex", flexDirection:"column"}}>
             <Link to={`/`} className="navLink"><Typography>Anasayfa</Typography></Link>
             
-            <Typography sx={{cursor:"pointer", textAlign: "center", width:"100%","&:hover":{"border-right": "2px solid aqua"}}}  onClick={onLogout}>Çıkış</Typography>
+            <Typography sx={{cursor:"pointer", textAlign: "center", width:"100%","&:hover":{borderRight: "2px solid aqua"}}}  onClick={onLogout}>Çıkış</Typography>
          </ListItem> 
          ) :
        (<ListItem sx={{display:"flex", flexDirection:"column"}}>
