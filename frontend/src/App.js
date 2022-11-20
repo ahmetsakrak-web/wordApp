@@ -3,7 +3,7 @@ import Edit from "./pages/Edit"
 import {createTheme,ThemeProvider} from "@mui/material/styles"
 import { grey, blue, indigo } from '@mui/material/colors'
 import Anasayfa from "./pages/Anasayfa"
-import { Navbar } from './components/Navbar'
+import { Navbar } from './components/navbar'
 import {Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { store } from './app/store' 
