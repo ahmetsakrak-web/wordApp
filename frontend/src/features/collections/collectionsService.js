@@ -12,8 +12,10 @@ const fetchCollections = async(token)=>{
 }
 
 const createCollection = async(collectionName, token)=>{
-    const renk = Math.floor(10*Math.random());
-    const {data} = await axios.post(URL_COLLECTION, {...collectionName, color:backgroundColors[renk].background}, configBearer(token))
+   
+    const renk = Math.floor(9*Math.random());
+    
+    const {data} = await axios.post(URL_COLLECTION, {...collectionName, cColor:backgroundColors[renk]}, configBearer(token))
     return data
 }
 

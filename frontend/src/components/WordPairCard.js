@@ -36,9 +36,8 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
         position:"relative",
         padding:"1rem",
         mx:"10px",
-        backgroundColor:collection.color,
+        backgroundColor:collection.cColor.backgroundColor,
         width:"310px",
-        opacity:0.6,
         "&:hover":{
         background:indigo[600],
         cursor:"pointer"}
@@ -57,13 +56,13 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
             }}} />
                 
                 <Typography sx={{
-                    whiteSpace:"normal",
                     maxWidth:"300px",
                     textAlign:"center",
                     wordBreak: "break-all",
+                    whiteSpace:"normal",
                 }} 
                 fontWeight="fontWeightBold" 
-                color="kelimeRenk"  
+                color={collection.cColor.color}  
                 variant='h5' gutterBottom>
                     {capitalizeFirstLetter(word) }
                 </Typography>
@@ -76,7 +75,7 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
                 textAlign:"center",
                 minWidth:"300px", 
                 }}
-                color="aciklamaRenk" 
+                color="aciklamaRenk"
                 variant='body1'
                 gutterBottom>
                     {definition}

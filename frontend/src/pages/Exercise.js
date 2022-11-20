@@ -6,7 +6,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {getCollection, rArrayDelete, reset, randomizeArray, addWordToRandomArray} from "../features/collection/collectionSlice"
 import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-
+import { ExerciseLoader } from '../components/Loaders';
 
 
 
@@ -28,6 +28,7 @@ const Exercise = () => {
 const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}
 
  
+
   useEffect(()=>{
  
     if(isError){
@@ -63,11 +64,15 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
 
   if(isLoading || !collection.rArray){
   
-    return <h1>Loading</h1>
+    return <ExerciseLoader />
   }
   
   if(collection.cArray.length <= 0){
-    return <h1>Lütfen <span style={{color:collection.color}}>{collection.cName}</span> listesinde kelime olduğuna emin olun</h1>
+    return <Container sx={{...flexCenter,mt:"100px"}}>
+      <Typography sx={{backgroundColor:collection.cColor.backgroundColor,p:"2rem",fontSize:{xs:"20px",md:"30px"},fontWeight:500}} >
+        Lütfen <span style={{color:collection.cColor.color}}>{collection.cName}</span> listesinde kelime olduğuna emin olun
+      </Typography>
+    </Container>
   }
 
 
@@ -95,7 +100,7 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
     }
     
   }
-console.log(collection.rArray)
+
 
   return (
     <Container sx={{...flexCenter, height:"80vh", width:"100vw"}} >
@@ -104,8 +109,8 @@ console.log(collection.rArray)
 
       <Typography color="secondary.dark" 
       sx={{
-            textAlign:"center",
-            fontWeight:"600", 
+           
+            fontWeight:"500", 
             display:"inline", 
             mb:"1rem",
             fontSize:{xs:"35px",}
@@ -154,8 +159,8 @@ console.log(collection.rArray)
               minHeight:{xs:"30vh"},
               borderRadius:"10px",
               p:"20px",
-              backgroundColor:collection.color,
-              opacity:0.6
+              backgroundColor:collection.cColor.backgroundColor,
+              
           }}>
             <Typography sx={{ 
               fontSize:{
@@ -164,11 +169,10 @@ console.log(collection.rArray)
               },
               overflowY:"auto",
               p:"10px",
-              opacity:0.8,
+              color:collection.cColor.color,
               width:"100%",
               textAlign:"center",
               borderRadius:"10px",
-              color:"white",
               fontWeight:"500"}}>{collection.rArray[0].definition}</Typography>
           
               <Box sx={{...flexCenter, width:"100%"}} >
@@ -184,7 +188,7 @@ console.log(collection.rArray)
                           py:"1rem",
                           input:{fontSize:{xs:"25px",sm:"30px",},
                           textAlign:"center",
-                          borderBlockColor:collection.color }
+                          borderBlockColor:collection.cColor.backgroundColor }
                       }} 
                     variant='standard' name='word'color={success} value={word} onChange={(e)=>setWord(e.target.value)}/>
 
@@ -202,7 +206,7 @@ console.log(collection.rArray)
               fontSize:"20px", 
               p:"10px",
               borderRadius:"10px", 
-              backgroundColor:collection.color
+              backgroundColor:collection.cColor.backgroundColor
           }} 
           onClick={()=>dispatch(randomizeArray(collection.cArray))} 
           color="primary.light" fontSize="15px">

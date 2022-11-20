@@ -10,16 +10,16 @@ function capitalizeFirstLetter(string) {
 
 
 
-const backgroundColors= [
-    {background:"#990000"},
-    {background:"black"},
-    {background:"#333"},
-    {background:"#00563B"},
-    {background:"#ff8c00"},
-    {background:"#153462"},
-    {background:"purple"},
-    {background:"#7B3F00"},
-    {background:"#495464"}
+const backgroundColors = [
+    {backgroundColor:"#500000", color:"black"},
+    {backgroundColor:"black", color:"white"},
+    {backgroundColor:"#333", color:"white"},
+    {backgroundColor:"#00563B", color:"white"},
+    {backgroundColor:"#ff8c00", color:"#333"},
+    {backgroundColor:"#153462", color:"white"},
+    {backgroundColor:"purple", color:"white"},
+    {backgroundColor:"#7B3F00", color:"black"},
+    {backgroundColor:"#495464", color:"white"}
 ]
 
 
@@ -53,8 +53,9 @@ const deleteWordPair = async(cId, wId, token)=>{
 
 
 
-const changeColor = async(cId, color, token)=>{
-  const {data} = await axios.put(URL_COLLECTION_COLOR + cId, {color}, configBearer(token))
+const changeColor = async(cId, cColor, token)=>{
+  
+  const {data} = await axios.put(URL_COLLECTION_COLOR + cId, cColor, configBearer(token))
   return data
 }
 

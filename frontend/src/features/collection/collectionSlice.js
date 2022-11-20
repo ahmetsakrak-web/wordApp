@@ -12,9 +12,11 @@ const initialState ={
 
 export const getCollection = createAsyncThunk("collection/fetch",async(Cid, thunkAPI)=>{
     try {
+        if(thunkAPI.getState().auth.user?.token){
         const token = thunkAPI.getState().auth.user.token
-       
         return await collectionService.fetchCollection(Cid, token)
+        }
+       
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)

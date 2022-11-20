@@ -52,4 +52,12 @@ const CollectionsLoader = ()=>{
 }
 
 
-export  {WordPairLoader, CollectionsLoader}
+const ExerciseLoader =()=>{
+  return  <Container sx={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:"80vh", width:"100vw"}} >
+     <Skeleton variant="text" sx={{ fontSize: "35px",mb:"1rem" }} width={299} height={60}   animation="wave" />
+     <Skeleton variant="rounded" width={918} height={283} />
+  </Container>
+}
+
+
+export  {WordPairLoader, CollectionsLoader,ExerciseLoader}

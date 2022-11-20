@@ -4,7 +4,7 @@ import { Widgets, Clear, Edit, AddRounded} from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCollections, deleteCollectionThunk, updateColor, updateName, } from '../features/collections/collectionsSlice';
 import { backgroundColors, changeColor, changeName } from './utilities';
-
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 
 const CollectionAddModal = ({addModelOpen, setModals}) => {
@@ -36,13 +36,18 @@ const CollectionAddModal = ({addModelOpen, setModals}) => {
 }
 
     return (
-    <Modal open={addModelOpen} onClose={()=>setModals(pS=>({...pS, addModelOpen:false}))} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+    <Modal 
+    
+    open={addModelOpen} 
+    onClose={()=>setModals(pS=>({...pS, addModelOpen:false}))} 
+    aria-labelledby="modal-modal-title" 
+    aria-describedby="modal-modal-description">
     <Box sx={{
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: 800,
+                width: {xs:"300px",sm:"500px",md:"800px"},
                 bgcolor: 'secondary.main',
                 border: '2px solid #000',
                 boxShadow: 24,
@@ -77,6 +82,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
   const [mysetE, setMysetE] = useState(false);
 
   const {user} = useSelector(state=> state.auth);
+  const {collection} = useSelector(state=> state.collection);
   const dispatch = useDispatch();
 
  
@@ -88,6 +94,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
     }
     
     if(collectionName){
+     
       const data = await changeName(updateModelOpen, collectionName, user.token)
       
       dispatch(updateName(data));
@@ -108,7 +115,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: 800,
+                width: {xs:"300px",sm:"500px",md:"800px"},
                 bgcolor: 'secondary.main',
                 border: '2px solid #000',
                 boxShadow: 24,
@@ -123,7 +130,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
                         error={mysetE} fullWidth required multiline
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
             <Button type='submit' variant='contained'>
-              <AddRounded />
+              <ModeEditIcon />
             </Button>
       </form>
     </Box>
@@ -190,10 +197,10 @@ const SettingModal = ({setModals, collectionId }) => {
 
  
 
-  const colorChange =async(color)=>{
-   
+  const colorChange =async(cColor)=>{
+     
       try {
-       const data = await changeColor(collectionId, color, user.token)
+       const data = await changeColor(collectionId, cColor, user.token)
         dispatch(updateColor(data));
 
       } catch (error) {
@@ -276,11 +283,11 @@ const SettingModal = ({setModals, collectionId }) => {
 
           <ListItem sx={{flexWrap:"wrap", width:"130px"}}>
               {backgroundColors.map(((item,i)=>{
-                return <Box key={i+". color"} onClick={()=>colorChange(item.background)} 
+                return <Box key={i+". color"} onClick={()=>colorChange(item)} 
                 sx={{
                     width:"20px",
                     height:"20px", 
-                    background:item.background,
+                    background:item.backgroundColor,
                     m:"5px", 
                     cursor:"pointer",
                     transition:"all 200ms",

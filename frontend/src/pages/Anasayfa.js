@@ -65,24 +65,37 @@ const Anasayfa = () => {
           collections.map(i=>{
 
 
-
               return (
                 <Card 
                 
                   sx={{
-                  backgroundColor:i.color,
-                  opacity:0.6,
+                  backgroundColor:i.cColor.backgroundColor,
+                 
                   borderRadius:"10px",
                   boxShadow:12,
-                  px:"20px",
+                  px:"25px",
                   transition:"all .333s ease",
                   position:"relative",
-                  "&:hover":{backgroundColor:"secondary.dark",}}}  key={i._id}>
+                  "&:hover":{backgroundColor:"secondary.light"}}}  key={i._id}>
                     <SettingModal   setModals={setModals}  collectionId={i._id} />
                     <CollectionDeleteModal  setModals={setModals} confirmModalOpen={confirmModalOpen}  />
-                    <Typography sx={{textAlign:"center",p:"1rem", }} variant="h5"> {i.cName}</Typography>
-                    <Typography sx={{textAlign:"center",lineHeight:"0px" }} variant="h6"> [{i.cArray.length}]</Typography>
-                    <CardContent sx={{textAlign:"center"}}>
+
+
+
+
+                    <Typography sx={{
+                      textAlign:"center",
+                      p:"1rem",
+                      wordBreak: "break-all",
+                      whiteSpace:"normal", 
+                      fontWeight:400,
+                      color:i.cColor.color, 
+                      }} variant="h5"> {i.cName}</Typography>
+
+
+
+                    <Typography sx={{textAlign:"center",lineHeight:"0px", color:i.cColor.color,fontWeight:300}} variant="h6"> [{i.cArray.length}]</Typography>
+                    <CardContent sx={{textAlign:"center",}}>
                         <Link to={`/edit/${i._id}`} className="cardLink"> <Typography>Düzenle</Typography></Link>
                         <Link to={`/exercise/${i._id}`} className="cardLink"> <Typography>Egzersiz</Typography></Link>
                     </CardContent>

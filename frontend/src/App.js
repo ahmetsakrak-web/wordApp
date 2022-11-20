@@ -3,7 +3,7 @@ import Edit from "./pages/Edit"
 import {createTheme,ThemeProvider} from "@mui/material/styles"
 import { grey, blue, indigo } from '@mui/material/colors'
 import Anasayfa from "./pages/Anasayfa"
-import { Navbar } from './components/navbar'
+import { Navbar } from './components/Navbar'
 import {Register } from './pages/Register'
 import { Login } from './pages/Login'
 import { store } from './app/store' 
@@ -18,7 +18,7 @@ import Exercise from './pages/Exercise'
 const theme = createTheme({
   palette:{
 
-    aciklamaRenk:blue[300],
+    aciklamaRenk:blue[600],
     kelimeRenk:grey[200],
     arkaplan:indigo[600],
     mode:"dark",

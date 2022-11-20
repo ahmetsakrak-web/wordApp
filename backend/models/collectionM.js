@@ -8,7 +8,10 @@ const collectionSchema = new Schema({
         ref:"User",
     }, 
     cName:String,
-    color:String,
+    cColor:{
+        backgroundColor:String,
+        color:String
+    },
     cArray:[{
         word: String,
         definition:String,

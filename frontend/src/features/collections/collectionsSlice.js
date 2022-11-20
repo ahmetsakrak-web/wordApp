@@ -11,8 +11,11 @@ const initialState ={
 
 export const getCollections = createAsyncThunk("collections/fetch",async(_, thunkAPI)=>{
     try {
-        const token = thunkAPI.getState().auth.user.token
-        return await collectionService.fetchCollections(token)
+        if(thunkAPI.getState().auth.user?.token){
+            const token = thunkAPI.getState().auth.user.token
+            return await collectionService.fetchCollections(token)
+        }
+        
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -51,7 +54,7 @@ const collectionSlice = createSlice({
     reducers:{
         reset:(state)=>initialState,
         updateColor:(state,action)=>{
-            state.collections[action.payload.foundIndex].color = action.payload.color
+            state.collections[action.payload.foundIndex].cColor = action.payload.cColor
         },
         updateName:(state, action)=>{
             const foundIndex = state.collections.findIndex(collection=>collection._id === action.payload.cId);

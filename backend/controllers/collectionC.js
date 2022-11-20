@@ -49,11 +49,11 @@ const postCollectionName = asyncHandler(async(req,res)=>{
     if(!req.body.collectionName){
         throw new Error("You should give a name collection")
     }
-
+    console.log(req.body.cColor);
     const collection = await Collection.create({
         cName:req.body.collectionName,
         cArray:[],
-        color:req.body.color,
+        cColor:req.body.cColor,
         user:req.user.id
     })
 
@@ -112,12 +112,12 @@ const putColor = asyncHandler(async(req,res)=>{
         res.status(401);
         throw new Error("You're not allowed");
     }
-    
-    collection.color = req.body.color
+   
+    collection.cColor = req.body
 
     await collection.save();
 
-    res.json({color:collection.color, foundIndex});
+    res.json({cColor:collection.cColor, foundIndex});
 
 })
 
