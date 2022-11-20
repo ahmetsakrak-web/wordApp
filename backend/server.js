@@ -19,8 +19,10 @@ server.use("/api/collections", require("./routes/collectionR"));
 
 
 if(process.env.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "../frontend/build")))
-    app.get("*", (req, res)=>res.sendFile(path.resolve(__dirname,"../","frontend","build","index.html")))
+    server.use(express.static(path.join(__dirname, "../frontend/build")))
+    server.get("*", (req, res)=>res.sendFile(path.resolve(__dirname,"../","frontend","build","index.html")))
+} else{
+    server.get("/",(req,res)=>console.log("Change node env develop"))
 }
 
 server.use(errorHandler);
