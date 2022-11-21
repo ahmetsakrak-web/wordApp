@@ -24,12 +24,10 @@ body {
 .link{
   text-decoration: none;
   color: white;
-  
-  font-size: 20px;
-  
+  font-size: 16px;
   transition: .333s all ease;
 }
-.link :hover{
+.link:hover{
  color: aqua;
 }
 

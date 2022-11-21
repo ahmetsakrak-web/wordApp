@@ -2,11 +2,11 @@ import React,{useEffect, useState} from 'react'
 import {Box,Button,TextField, Typography} from "@mui/material"
 import {Container } from '@mui/system'
 import {useSelector, useDispatch} from "react-redux"
-import {useNavigate} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
 import { register, reset } from '../features/auth/authSlice'
 import { CollectionsLoader } from '../components/Loaders';
-
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 
 
@@ -125,8 +125,13 @@ export const Register = () => {
          
               <AccountBoxIcon/>   Kayıt Ol     
               </Button>
-  
+              <Typography sx={{textAlign:"center",fontSize:"18px",color:"white",mt:"10px"}}> Hesabın var mı? 
+                <Button sx={{ml:"10px","&:hover":{background:"none"}}} startIcon={<ArrowRightIcon/>}>
+                    <Link className='link'  to="/login"> Giriş Yap</Link>
+                </Button>
+            </Typography>
               </Box>
+             
               </Container>
   
     )

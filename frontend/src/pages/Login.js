@@ -5,9 +5,9 @@ import {toast} from "react-toastify"
 import LoginIcon from '@mui/icons-material/Login';
 import { login,reset } from '../features/auth/authSlice';
 import { useSelector, useDispatch} from "react-redux"
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CollectionsLoader } from '../components/Loaders';
-
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 export const Login = () => {
 const dispatch = useDispatch();
@@ -85,7 +85,7 @@ if(isLoading){
                 }}
             onSubmit={onSubmit}
         >
-           <Typography  sx={{textAlign:"center",fontSize:"25px", color:"primary.light"}}>
+           <Typography  sx={{textAlign:"center",fontSize:"35px", color:"primary.light"}}>
                 Word App
            </Typography>
             <TextField type="email"  label="Email" variant="standard" name='email' value={email} onChange={onChange}
@@ -105,7 +105,11 @@ if(isLoading){
             <Button type="submit" size='small' variant='contained' sx={{mt:"40px", width:"100%"}}>
             <LoginIcon sx={{ fontSize: 25, top:"2px", position:"relative" }} />    Giriş
             </Button>
-
+            <Typography sx={{textAlign:"center",fontSize:"18px",color:"white",mt:"10px"}}> Hesabın Yok mu? 
+                <Button sx={{ml:"10px","&:hover":{background:"none"}}}  startIcon={<ArrowRightIcon/>}>
+                    <Link className='link'  to="/register"> Kayıt Ol</Link>
+                </Button>
+            </Typography>
             </Box>
             </Container>
 
