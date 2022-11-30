@@ -82,7 +82,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
   const [mysetE, setMysetE] = useState(false);
 
   const {user} = useSelector(state=> state.auth);
-  const {collection} = useSelector(state=> state.collection);
+  
   const dispatch = useDispatch();
 
  

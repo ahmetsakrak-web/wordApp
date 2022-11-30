@@ -4,7 +4,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useParams, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux"
 import {getCollection, rArrayDelete, reset, randomizeArray, addWordToRandomArray} from "../features/collection/collectionSlice"
-import {Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { ExerciseLoader } from '../components/Loaders';
 
