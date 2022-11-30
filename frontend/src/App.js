@@ -22,6 +22,7 @@ const theme = createTheme({
     kelimeRenk:grey[200],
     arkaplan:indigo[600],
     mode:"dark",
+    
    secondary:{
     main:"#330e62"
    }

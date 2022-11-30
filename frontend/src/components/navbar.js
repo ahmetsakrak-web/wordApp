@@ -97,8 +97,10 @@ export const  Navbar=()=> {
         open={open}
       >
        
-        <DrawerHeader >
-           <Typography sx={{mx:"auto",fontSize:"23px",padding:"1rem 2rem",lineHeight:"1.5rem"}}>{user ? user.username :"MENÜ"}</Typography> 
+        <DrawerHeader sx={{backgroundColor:"secondary.main"}} >
+           <Typography 
+           sx={{mx:"auto",fontSize:"23px",padding:"1rem 2rem",lineHeight:"1.5rem",}}>
+            {user ? user.username :"MENÜ"}</Typography> 
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
