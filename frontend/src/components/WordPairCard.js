@@ -5,6 +5,7 @@ import {capitalizeFirstLetter, deleteWordPair} from "./utilities"
 import { useSelector, useDispatch } from 'react-redux';
 import {Clear} from '@mui/icons-material';
 import { deleteWord } from '../features/collection/collectionSlice';
+import { textAlign } from '@mui/system';
 
 const WordPairCard = ({setEditMode, word, definition, _id, }) => {
 
@@ -29,37 +30,40 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
     }
   
   
-   
+  
   return (
-    <Card   className='cardAnime'  onClick={()=>editSwitch( _id)}  sx={{
+    <Card     className='cardAnime' onClick={()=>editSwitch( _id)}  sx={{
         borderRadius:"20px",
         position:"relative",
         padding:"1rem",
-        mx:"10px",
         backgroundColor:collection.cColor.backgroundColor,
-        width:"310px",
+        transition:"all ease-in 300ms ",
+        width:{xs:"310px",sm:"400px"},
         "&:hover":{
         background:indigo[600],
-        cursor:"pointer"}
+        cursor:"pointer"},
+        ...(definition.split(" ").length<4 && {display:"flex",flexDirection:"column",textAlign:"center",justifyContent:"center"}),
             
     }}>
         <Clear  onClick={(e)=>deleteWordHandler(e,_id)}  sx={{
-            backgroundColor:"secondary.dark",
-            color:"red", 
-            borderRadius:"50%", 
+            backgroundColor:"white",
+            p:"2px",
+            color:"black", 
+            borderBottomLeftRadius:"50%", 
             position:"absolute",
-            right:"10px",
-            top:"10px",
+            right:"0px",
+            top:"0px",
             fontSize:'30px',
+            transition:"all ease 300ms",
             "&:hover":{
+            color:"red",
             backgroundColor:"secondary.light",
             }}} />
                 
                 <Typography sx={{
-                    maxWidth:"300px",
-                    textAlign:"center",
-                    wordBreak: "break-all",
-                    whiteSpace:"normal",
+                    width:"100%",
+                    
+                   
                 }} 
                 fontWeight="fontWeightBold" 
                 color={collection.cColor.color}  
@@ -70,10 +74,8 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
                 <Typography  
                 fontWeight="fontWeightBold"  
                 sx={{
-                wordBreak: "break-all",
-                whiteSpace:"normal",
-                textAlign:"center",
-                minWidth:"300px", 
+                
+                width:"100%", 
                 }}
                 color="aciklamaRenk"
                 variant='body1'

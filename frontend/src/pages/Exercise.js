@@ -4,7 +4,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useParams, useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from "react-redux"
 import {getCollection, rArrayDelete, reset, randomizeArray, addWordToRandomArray} from "../features/collection/collectionSlice"
-import {Box, Button, TextField, Typography } from '@mui/material';
+import {Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { ExerciseLoader } from '../components/Loaders';
 
@@ -112,8 +112,8 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
            
             fontWeight:"500", 
             display:"inline", 
-            mb:"1rem",
-            fontSize:{xs:"35px",}
+            mb:"8rem",
+            fontSize:{xs:"30px",}
         }}> 
       kelime sayısı: {error ? collection.rArray.length - 1 : collection.rArray.length} / {collection.cArray.length}
       </Typography>
@@ -127,8 +127,8 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
                     fontWeight:"600", 
                     color:"green", 
                     textAlign:"center",
-                    mb:"1rem", 
-                    
+                    mb:"5rem", 
+                    letterSpacing:"1px",
                     fontSize:{xs:"25px",}
                 }} >
                                   Doğru bildiniz! 
@@ -138,10 +138,11 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
        {              error 
                       ?  
                 <>
-                <Typography sx={{color:"error.main", fontSize:{xs:"20px",sm:"25px"},mb:"0px", position:"relative"}} > 
-                <ErrorOutlineIcon sx={{position:"absolute",left:"-30px",top:{sm:"5px"}}}  />     Kelimeyi yanlış girdiniz. Doğrusu;
-                </Typography>
-                <Typography sx={{fontSize:"35px",color:"success.dark"}}>{collection.rArray[0].word}</Typography> 
+              
+                 <Alert icon={<ErrorOutlineIcon sx={{fontSize:"40px"}} />} sx={{background:"none",padding:"0px",fontSize:"25px"}}  severity="error">
+                    Yanlış girdiniz doğrusu;
+                </Alert>
+                <Typography sx={{fontSize:"25px",color:"success.dark",mb:"4rem",fontWeight:"600",letterSpacing:"1px" }}>{collection.rArray[0].word}</Typography> 
                   
                 </>
                   : ""
@@ -180,7 +181,7 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
                                 
 
 
-                <form autoComplete='off' className='form' onSubmit={checkHandler} >
+                <form autoComplete='off' spellCheck="false" className='form' onSubmit={checkHandler} >
 
                 <TextField error={error} placeholder='Kelimeyi Giriniz...'  
                     sx={{

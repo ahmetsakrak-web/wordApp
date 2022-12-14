@@ -86,7 +86,7 @@ if(isLoading){
             onSubmit={onSubmit}
         >
            <Typography  sx={{textAlign:"center",fontSize:"35px", color:"primary.light"}}>
-                Word App
+            Word Exercise
            </Typography>
             <TextField type="email"  label="Email" variant="standard" name='email' value={email} onChange={onChange}
             sx={{

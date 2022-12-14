@@ -92,9 +92,9 @@ export const Register = () => {
                   }}
               onSubmit={onSubmit}
           >
-             <Typography sx={{textAlign:"center",fontSize:"25px",color:"primary.light"}} >
-                                Word App
-            </Typography>
+             <Typography  sx={{textAlign:"center",fontSize:"35px", color:"primary.light"}}>
+            Word Exercise
+           </Typography>
 
 
               <TextField  label="İsim" variant="standard" name="name" type="text" value={name} onChange={onChange}

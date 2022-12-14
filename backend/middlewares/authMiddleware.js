@@ -12,8 +12,9 @@ const routeProtector =async (req,res,next) =>{
             next();
         }
     } catch (error) {
-        console.log(error)
-        res.status(401);
+       
+        res.json({message:"Oturumun Süresi Doldu"}).status(408)
+        
     }
 }
 

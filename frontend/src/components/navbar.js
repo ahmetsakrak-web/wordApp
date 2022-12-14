@@ -1,19 +1,23 @@
 import * as React from 'react';
+
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
+
+
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import HomeIcon from '@mui/icons-material/Home';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import GroupIcon from '@mui/icons-material/Group';
+import LoginIcon from '@mui/icons-material/Login';
 import {Link} from "react-router-dom"
-import ListItem from '@mui/material/ListItem';
-import {Typography } from '@mui/material';
+
+import {ListItemButton, ListItemIcon, ListItemText, Typography,Box,Drawer,Toolbar,Divider, IconButton,ListItem } from '@mui/material';
+
 import { mylogout, reset } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
+
 
 const drawerWidth = 240;
 
@@ -64,7 +68,7 @@ export const  Navbar=()=> {
   return (
     <Box sx={{  backgroundColor:"secondary.main", display:"flex", alignItems:"center"}}>
       
-      <Toolbar >
+      <Toolbar>
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -73,14 +77,19 @@ export const  Navbar=()=> {
              backgroundColor:"secondary.light",
               mr: 2, ...(open && { display: 'none' }),
               "&:hover":{
-                background:"black"
-              }
-             }}
-          >
+                background:"black"}}}>
+
             <MenuIcon />
+
           </IconButton>
+          
+          <Typography sx={{display:"flex",alignItems:"center",position:"absolute",width:"115px",left:{xs:"60px",sm:"100px"}}}>
+            <Link to={`/`} className="link">Word Exercise</Link>
+          </Typography>
+
         </Toolbar>
-        <Link to={`/`} className="link"><Typography>Word App</Typography></Link>
+             
+    
        
       <Drawer
         sx={{
@@ -98,9 +107,11 @@ export const  Navbar=()=> {
       >
        
         <DrawerHeader sx={{backgroundColor:"secondary.main"}} >
-           <Typography 
-           sx={{mx:"auto",fontSize:"23px",padding:"1rem 2rem",lineHeight:"1.5rem",}}>
-            {user ? user.username :"MENÜ"}</Typography> 
+            <ListItem>
+                  <Typography>
+                  {user ? user.username :"MENÜ"}
+                  </Typography>
+          </ListItem>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -110,20 +121,57 @@ export const  Navbar=()=> {
          {/* Links  */}
         {
         user ? (
-        <ListItem sx={{display:"flex", flexDirection:"column"}}>
-            <Link to={`/`} className="navLink"><Typography>Anasayfa</Typography></Link>
-            
-            <Typography sx={{cursor:"pointer", textAlign: "center", width:"100%","&:hover":{borderRight: "2px solid aqua"}}}  onClick={onLogout}>Çıkış</Typography>
-         </ListItem> 
+          <>
+          <ListItem>
+            <ListItemButton>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+              <Link to={`/`} className="navLink"><ListItemText>Anasayfa</ListItemText></Link>
+            </ListItemButton>
+          </ListItem> 
+
+          <ListItem onClick={onLogout}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                  <Typography >
+                    Çıkış
+                  </Typography>
+              </ListItemButton>
+          </ListItem>
+
+          </>
          ) :
-       (<ListItem sx={{display:"flex", flexDirection:"column"}}>
-          <Link to={`/login`} className="navLink"> <Typography>Giriş</Typography></Link>
-          <Link to={`/register`} className="navLink"><Typography>Kayıt Ol</Typography></Link>
-        </ListItem>) 
+       (<>
+          
+          <ListItem>
+          <Link to={`/login`} className="navLink">
+            <ListItemButton xs={{width:"100%"}}>
+            <ListItemIcon>
+              <LoginIcon />
+            </ListItemIcon>
+              <ListItemText>Giriş</ListItemText>
+            </ListItemButton>
+            </Link>
+          </ListItem> 
+
+          <ListItem>
+          <Link to={`/register`} className="navLink">
+            <ListItemButton>
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>
+              <ListItemText>Kayıt Ol</ListItemText>
+            </ListItemButton>
+            </Link>
+          </ListItem> 
+        </>) 
         }
          
    
-        <Divider />
+       
       </Drawer>
       
     </Box>

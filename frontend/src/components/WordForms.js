@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { addWordPair, editWordPair } from './utilities';
 import { useDispatch } from 'react-redux';
 import { createWord, updateWord } from '../features/collection/collectionSlice';
+import { fontSize } from '@mui/system';
+import { CheckCircleOutline, InfoOutlined } from '@mui/icons-material';
 
 
 const AddForm = () => {
@@ -34,12 +36,23 @@ const AddForm = () => {
   
 
   return (
-    <form autoComplete='off' onSubmit={addItem}>
-      <Typography variant='h4' color="textSecondary" gutterBottom>
+    <form  autoComplete='off' spellCheck="false" onSubmit={addItem}>
+      <Typography variant='h4' sx={{my:"1.5rem"}} color="textSecondary" gutterBottom>
          {collection.cName}
       </Typography>
 
-      <Alert sx={{background:"none",padding:"0px"}} severity="info">Kelimeleri düzenlemek için karta dokun</Alert>
+    
+     <Alert icon={<InfoOutlined sx={{fontSize:{sm:"27px"}}} />} sx={{background:"none",padding:"0px",fontSize:{sm:"20px"}}}  severity="info">
+        Kelimeleri düzenlemek için karta dokun
+      </Alert>
+
+      
+      
+      
+      
+      <Alert icon={<CheckCircleOutline />} sx={{background:"none",padding:"0px",fontSize:{xs:"20px",sm:"20px"}}} severity="success">
+        Eklenen  Kelime Sayısı: <Typography fontSize={20} sx={{display:"inline",color:"darkgrey"}}> {collection.cArray?.length}</Typography> 
+      </Alert>
 
       <TextField  fullWidth required
         onChange={(e)=>setAddForm(pS=>({...pS, word:e.target.value}))}
@@ -56,6 +69,9 @@ const AddForm = () => {
     </form>
   )
 }
+
+
+
 
 const EditForm =({item, setEditMode}) =>{
 
@@ -78,22 +94,22 @@ const EditForm =({item, setEditMode}) =>{
 }
  
 
-  return <form autoComplete='off' onSubmit={(e)=>editItem(e, item._id)}>
+  return <form autoComplete='off' spellCheck="false" onSubmit={(e)=>editItem(e, item._id)}>
           <Card 
-             sx={{  
+        
+             sx={{  position:"relative",
                     display:'flex',
+                    
                     flexDirection:"column",
                     justifyContent:"center",
                     alignItems:"center",
                     borderRadius:"20px",
-                    padding:"0.5rem 0.5rem",
+                    padding:"1rem ",
                     backgroundColor:indigo[600],
-                    width:"310px",                
+                    width:{xs:"310px",sm:"400px"},               
                  }}>
                   
-                  <Typography variant='h6' color="textSecondary" sx={{textAlign:"center"}} gutterBottom>
-                      Yeniden Düzenle
-                  </Typography>
+                  
                 
                   <TextField color="primary" required
                     onChange={(e)=>setEditMode(prevState=>{
@@ -101,7 +117,7 @@ const EditForm =({item, setEditMode}) =>{
                       obj[item._id].word=e.target.value
                       return obj
                     })}
-                    value={item?.word ?? ""} variant='standard' label="İngilizce"sx={{ my:1}}/>
+                    value={item?.word ?? ""} variant='standard' label="İngilizce" sx={{ width:"90%"}}/>
                     
                   <TextField  required  multiline
                     onChange={(e)=>setEditMode(prevState=>{
@@ -109,12 +125,12 @@ const EditForm =({item, setEditMode}) =>{
                       obj[item._id].definition=e.target.value
                       return obj
                     })}
-                    variant='standard' label="Türkçe" value={item?.definition ?? ""} sx={{my:1}} />
+                    variant='standard' label="Türkçe" value={item?.definition ?? ""} sx={{mt:"10px", width:"90%"}} />
           
-            
-                  <Button type='submit' variant='contained'>
+                  <Button  sx={{position:"absolute",top:0,p:"0 10px"}} type='submit' variant='contained'>
                     Düzenle
                   </Button>
+                  
           </Card>
   </form>
 }

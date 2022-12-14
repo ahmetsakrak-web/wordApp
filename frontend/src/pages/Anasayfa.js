@@ -40,9 +40,11 @@ const Anasayfa = () => {
     if(!user){
       navigate("/login")
     }
+   
+
     dispatch(getCollections())
-   
-   
+
+
     return ()=>{
       dispatch(reset())
     }
@@ -70,14 +72,15 @@ const Anasayfa = () => {
                 
                   sx={{
                   backgroundColor:i.cColor.backgroundColor,
-                 
                   borderRadius:"10px",
+                  cursor:"default",
                   boxShadow:12,
                   px:"25px",
+                  pt:"15px",
                   transition:"all .333s ease",
                   position:"relative",
                   "&:hover":{backgroundColor:"secondary.light"}}}  key={i._id}>
-                    <SettingModal   setModals={setModals}  collectionId={i._id} />
+                    <SettingModal cName={i.cName}  setModals={setModals}  collectionId={i._id} />
                     <CollectionDeleteModal  setModals={setModals} confirmModalOpen={confirmModalOpen}  />
 
 
@@ -94,10 +97,22 @@ const Anasayfa = () => {
 
 
 
-                    <Typography sx={{textAlign:"center",lineHeight:"0px", color:i.cColor.color,fontWeight:300}} variant="h6"> [{i.cArray.length}]</Typography>
-                    <CardContent sx={{textAlign:"center",}}>
-                        <Link to={`/edit/${i._id}`} className="cardLink"> <Typography>Düzenle</Typography></Link>
-                        <Link to={`/exercise/${i._id}`} className="cardLink"> <Typography>Egzersiz</Typography></Link>
+                    <Typography sx={{textAlign:"center",lineHeight:"0px", color:i.cColor.color,fontWeight:300}} variant="h6"> 
+                      [ {i.cArray.length} ]
+                    </Typography>
+                    <CardContent sx={{textAlign:"center",display:"flex",justifyContent:"space-between"}}>
+                        <Link to={`/edit/${i._id}`} className="cardLink" > 
+                          <Typography 
+                          sx={{fontWeight:500,color:i.cColor.color}}>
+                            Düzenle
+                            </Typography>
+                        </Link>
+                        <Link to={`/exercise/${i._id}`} className="cardLink" >
+                           <Typography 
+                            sx={{fontWeight:500,color:i.cColor.color}}>
+                              Egzersiz
+                            </Typography>
+                        </Link>
                     </CardContent>
                    
                 </Card>

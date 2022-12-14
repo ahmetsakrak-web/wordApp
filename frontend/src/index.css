@@ -9,15 +9,10 @@ body {
 .navLink{
   text-decoration: none;
   color: white;
-  display: block;
   font-size: 20px;
-  width: 100%;
-  text-align: center;
-  transition: .333s all ease;
+  width:100%;
 }
-.navLink :hover{
- border-right: 2px solid aqua;
-}
+
 
 
 
@@ -26,7 +21,12 @@ body {
   color: white;
   font-size: 16px;
   transition: .333s all ease;
+  display:inline;
+  width:100%;
+ 
 }
+
+
 .link:hover{
  color: aqua;
 }
@@ -38,7 +38,7 @@ body {
   color: white;
   display: inline-block;
   margin: 5px;
- 
+  font-weight: bold;
  
 }
 .cardLink :hover{
@@ -46,9 +46,7 @@ body {
   
  }
 
-.form{
-  width: 100%;
-}
+
 
 
 .edit-enter {
@@ -66,13 +64,13 @@ body {
   opacity: 1;
   
   transform: translate(0px, 0px);
-  height: 300px;
+
 }
 .edit-exit-active {
   opacity: 0;
  
   transform: translate(00px, -100px);
-  transition:  all 300ms;
+  transition:  all 400ms;
 
 }
 .cardAnime{

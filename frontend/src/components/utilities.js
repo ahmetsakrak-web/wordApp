@@ -32,6 +32,8 @@ const configBearer =(token)=> {
  
 }
 
+
+
 const addWordPair = async(cId, wordPair, token)=>{
       const {data} = await axios.put(URL_COLLECTION + cId, wordPair, configBearer(token))
       return data
@@ -79,6 +81,7 @@ export {
   changeColor,
   changeName,
   deleteWordPair,
+  
   
 }
 

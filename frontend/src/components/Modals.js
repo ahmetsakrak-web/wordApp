@@ -7,6 +7,7 @@ import { backgroundColors, changeColor, changeName } from './utilities';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 
+
 const CollectionAddModal = ({addModelOpen, setModals}) => {
   
   const [collectionName, setCollectionName] =useState("");
@@ -53,13 +54,13 @@ const CollectionAddModal = ({addModelOpen, setModals}) => {
                 boxShadow: 24,
                 p: 4,
             }}>
-      <form autoComplete='off' onSubmit={submitHandler}>
+      <form autoComplete='off' spellCheck="false" onSubmit={submitHandler}>
             <Typography variant='h4' component="h2" color="textSecondary" gutterBottom>
                 Yeni Set
             </Typography>           
             <TextField  onChange={(e)=>setCollectionName(e.target.value)} 
                         variant='outlined' label="Yeni Set Adı" value={collectionName}
-                        error={mysetE} fullWidth required multiline
+                        error={mysetE} fullWidth required 
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
             <Button type='submit' variant='contained'>
               <AddRounded />
@@ -75,15 +76,22 @@ const CollectionAddButton =({setModals})=>{
  
  
 
+
+
+
+
 const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
-  
-  const [collectionName, setCollectionName] = useState("");
-
-  const [mysetE, setMysetE] = useState(false);
-
+  const dispatch = useDispatch();
   const {user} = useSelector(state=> state.auth);
   
-  const dispatch = useDispatch();
+ 
+ 
+  const [collectionName, setCollectionName] = useState("");
+  
+  const [mysetE, setMysetE] = useState(false);
+ 
+  
+
 
  
   const submitHandler = async(e)=>{
@@ -95,7 +103,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
     
     if(collectionName){
      
-      const data = await changeName(updateModelOpen, collectionName, user.token)
+      const data = await changeName(updateModelOpen.collectionId, collectionName, user.token)
       
       dispatch(updateName(data));
       setCollectionName("");
@@ -121,13 +129,13 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
                 boxShadow: 24,
                 p: 4,
             }}>
-      <form autoComplete='off' onSubmit={submitHandler}>
+      <form autoComplete='off' spellCheck="false" onSubmit={submitHandler}>
             <Typography variant='h4' component="h2" color="textSecondary" gutterBottom>
                 Seti Düzenle
             </Typography>           
             <TextField  onChange={(e)=>setCollectionName(e.target.value)} 
-                        variant='outlined' label="Seti Düzenle" value={collectionName}
-                        error={mysetE} fullWidth required multiline
+                        variant='outlined' label="Seti Düzenle" defaultValue={updateModelOpen?.cName}
+                        error={mysetE} fullWidth required 
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
             <Button type='submit' variant='contained'>
               <ModeEditIcon />
@@ -175,7 +183,7 @@ const CollectionDeleteModal = ({setModals, confirmModalOpen}) =>{
 }
 
 
-const SettingModal = ({setModals, collectionId }) => {
+const SettingModal = ({setModals, collectionId,cName }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -267,7 +275,7 @@ const SettingModal = ({setModals, collectionId }) => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
     
    
-          <MenuItem onClick={()=>setModals(pS=> ({...pS, updateModelOpen:collectionId}))}>
+          <MenuItem onClick={()=>setModals(pS=> ({...pS, updateModelOpen:{collectionId, cName}}))}>
             <ListItemIcon>
               <Edit fontSize="small" />
             </ListItemIcon>

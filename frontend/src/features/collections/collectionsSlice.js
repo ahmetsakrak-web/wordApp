@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
+import { mylogout } from "../auth/authSlice"
 import collectionService  from "./collectionsService"
 
 const initialState ={
@@ -13,7 +14,11 @@ export const getCollections = createAsyncThunk("collections/fetch",async(_, thun
     try {
         if(thunkAPI.getState().auth.user?.token){
             const token = thunkAPI.getState().auth.user.token
-            return await collectionService.fetchCollections(token)
+            const data = await collectionService.fetchCollections(token)
+            if(data.message === "Oturumun Süresi Doldu"){
+                thunkAPI.dispatch(mylogout())
+            }
+            return data
         }
         
     } catch (error) {
