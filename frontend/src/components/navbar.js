@@ -58,100 +58,103 @@ export const  Navbar=()=> {
     navigate("/login");
     
   }
-
-  return (
-    <Box sx={{  backgroundColor:"secondary.main", display:"flex", alignItems:"center"}}>
+  if(user){
+    return (
+      <Box sx={{  backgroundColor:"secondary.main", display:"flex", alignItems:"center"}}>
+        
+        <Toolbar>
+            <IconButton
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{color:"white",
+               backgroundColor:"secondary.light",
+                mr: 2, ...(open && { display: 'none' }),
+                "&:hover":{
+                  background:"black"}}}>
+  
+              <Menu />
+  
+            </IconButton>
+            
+            <Typography sx={{display:"flex",alignItems:"center",position:"absolute",width:"115px",left:{xs:"60px",sm:"100px"}}}>
+              <Link to={`/`} className="link">Word Exercise</Link>
+            </Typography>
+  
+          </Toolbar>
+               
       
-      <Toolbar>
-          <IconButton
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{color:"white",
-             backgroundColor:"secondary.light",
-              mr: 2, ...(open && { display: 'none' }),
-              "&:hover":{
-                background:"black"}}}>
-
-            <Menu />
-
-          </IconButton>
-          
-          <Typography sx={{display:"flex",alignItems:"center",position:"absolute",width:"115px",left:{xs:"60px",sm:"100px"}}}>
-            <Link to={`/`} className="link">Word Exercise</Link>
-          </Typography>
-
-        </Toolbar>
-             
-    
-       
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor:"secondary.main",
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-       
-        <DrawerHeader sx={{backgroundColor:"secondary.main"}} >
-            <ListItem>
-                  <Typography>
-                  {user ? user.username :"MENÜ"}
-                  </Typography>
-          </ListItem>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-       
-         {/* Links  */}
-        {
-        user && (
-          <>
-          <ListItem>
-            <ListItemButton>
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-              <Link to={`/`} className="navLink"><ListItemText>Anasayfa</ListItemText></Link>
-            </ListItemButton>
-          </ListItem> 
-
-          <ListItem>
-            <ListItemButton onClick={passwordHandle}>
-            <ListItemIcon>
-              <Key />
-            </ListItemIcon>
-              <ListItemText>Şifreni Değiştir</ListItemText>
-            </ListItemButton>
-          </ListItem> 
-
-          <ListItem onClick={onLogout}>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ExitToApp />
-                </ListItemIcon>
-                  <Typography >
-                    Çıkış
-                  </Typography>
-              </ListItemButton>
-          </ListItem>
-
-          </>
-         )}
          
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+              backgroundColor:"secondary.main",
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+         
+          <DrawerHeader sx={{backgroundColor:"secondary.main"}} >
+              <ListItem>
+                    <Typography>
+                    {user.username}
+                    </Typography>
+            </ListItem>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+         
+           {/* Links  */}
+         
+            <>
+            <ListItem>
+              <ListItemButton>
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+                <Link to={`/`} className="navLink"><ListItemText>Anasayfa</ListItemText></Link>
+              </ListItemButton>
+            </ListItem> 
+  
+            <ListItem>
+              <ListItemButton onClick={passwordHandle}>
+              <ListItemIcon>
+                <Key />
+              </ListItemIcon>
+                <ListItemText>Şifreni Değiştir</ListItemText>
+              </ListItemButton>
+            </ListItem> 
+  
+            <ListItem onClick={onLogout}>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ExitToApp />
+                  </ListItemIcon>
+                    <Typography >
+                      Çıkış
+                    </Typography>
+                </ListItemButton>
+            </ListItem>
+  
+            </>
+         
+           
+     
+         
+        </Drawer>
+        
+      </Box>
+    );
+
    
-       
-      </Drawer>
-      
-    </Box>
-  );
+  }  
+ 
 }
