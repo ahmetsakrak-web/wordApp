@@ -112,7 +112,7 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
            
             fontWeight:"500", 
             display:"inline", 
-            mb:"8rem",
+            mb:"2rem",
             fontSize:{xs:"30px",}
         }}> 
       kelime sayısı: {error ? collection.rArray.length - 1 : collection.rArray.length} / {collection.cArray.length}
@@ -127,7 +127,7 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
                     fontWeight:"600", 
                     color:"green", 
                     textAlign:"center",
-                    mb:"5rem", 
+                    mb:{sm:"5rem"}, 
                     letterSpacing:"1px",
                     fontSize:{xs:"25px",}
                 }} >
@@ -142,7 +142,7 @@ const flexCenter= { display:"flex", flexDirection:"column", justifyContent:"cent
                  <Alert icon={<ErrorOutlineIcon sx={{fontSize:"40px"}} />} sx={{background:"none",padding:"0px",fontSize:"25px"}}  severity="error">
                     Yanlış girdiniz doğrusu;
                 </Alert>
-                <Typography sx={{fontSize:"25px",color:"success.dark",mb:"4rem",fontWeight:"600",letterSpacing:"1px" }}>{collection.rArray[0].word}</Typography> 
+                <Typography sx={{fontSize:"25px",color:"success.dark",mb:{sm:"4rem"},fontWeight:"600",letterSpacing:"1px" }}>{collection.rArray[0].word}</Typography> 
                   
                 </>
                   : ""

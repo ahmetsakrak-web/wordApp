@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Edit from "./pages/Edit"
 import {createTheme,ThemeProvider} from "@mui/material/styles"
-import { grey, blue, indigo } from '@mui/material/colors'
+import { grey, indigo } from '@mui/material/colors'
 import Anasayfa from "./pages/Anasayfa"
 import { Navbar } from './components/navbar'
 import {Register } from './pages/Register'
@@ -18,7 +18,7 @@ import Exercise from './pages/Exercise'
 const theme = createTheme({
   palette:{
 
-    aciklamaRenk:blue[600],
+   
     kelimeRenk:grey[200],
     arkaplan:indigo[600],
     mode:"dark",
@@ -37,7 +37,8 @@ const theme = createTheme({
   },
   
 })
-
+const user = store.getState(user=>user)
+console.log();
 
 
 
@@ -47,7 +48,7 @@ function App() {
           <ThemeProvider theme={theme}>
           
             <BrowserRouter>
-              <Navbar />
+              {user.auth.user && <Navbar />}
             
                     <Routes>
                             <Route path='/register' element={<Register/>} />

@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { addWordPair, editWordPair } from './utilities';
 import { useDispatch } from 'react-redux';
 import { createWord, updateWord } from '../features/collection/collectionSlice';
-import { fontSize } from '@mui/system';
 import { CheckCircleOutline, InfoOutlined } from '@mui/icons-material';
 
 
@@ -99,7 +98,6 @@ const EditForm =({item, setEditMode}) =>{
         
              sx={{  position:"relative",
                     display:'flex',
-                    
                     flexDirection:"column",
                     justifyContent:"center",
                     alignItems:"center",

@@ -2,6 +2,7 @@ const User = require("../models/userM");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
+const { json } = require("express");
 
 
 
@@ -39,6 +40,8 @@ const register = asyncHandler(async(req,res) =>{
 
 })
 
+
+
 const login = asyncHandler(async(req, res)=>{
     const {password, email} = req.body;
     const user = await User.findOne({email});
@@ -59,13 +62,40 @@ const userPage = asyncHandler(async(req, res)=>{
    res.status(200).json({user:req.user});
 })
 
+
+const passwordChange = asyncHandler(async(req, res)=>{
+    const {oldPassword,newPassword} = req.body;
+    const user = await User.findById(req.user.id);
+
+    if(await bcrypt.compare(oldPassword, user.password)){
+        const salt =await bcrypt.genSalt();
+        const hPassword = await bcrypt.hash(newPassword,salt);
+        user.password = hPassword;
+        await user.save();
+        res.status(201)
+        }else{
+            res.status(401);
+            throw new Error("Credantial Error");
+        }
+ 
+    
+ })
+
+
+
+
+
 const generateToken =(id)=>{
   return  jwt.sign({id},process.env.SECRET_KEY,{expiresIn:"1d"});
 }
 
 
+
+
+
 module.exports = {
     register,
     login,
-    userPage
+    userPage,
+    passwordChange
 }

@@ -3,6 +3,8 @@ import {Box,Button,TextField, Typography} from "@mui/material"
 import { Container } from '@mui/system'
 import {toast} from "react-toastify"
 import LoginIcon from '@mui/icons-material/Login';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { login,reset } from '../features/auth/authSlice';
 import { useSelector, useDispatch} from "react-redux"
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,6 +14,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 export const Login = () => {
 const dispatch = useDispatch();
 const navigator = useNavigate();
+
+const [visable, setVisable] = useState(false);
 
 const [formData,setFormData] = useState({
         email:"",
@@ -81,7 +85,7 @@ if(isLoading){
             autoComplete="off"
             sx={{
                 width:"350px",
-                mb:"220px"
+                mb:"200px"
                 }}
             onSubmit={onSubmit}
         >
@@ -96,14 +100,19 @@ if(isLoading){
                 
             }}
             />
-              <TextField label="Şifre" variant="standard"  name='password' type="password" value={password} onChange={onChange}
+            <div className='sifre' style={{marginTop:"50px"}}>
+             { visable  ? <VisibilityOffIcon onClick={()=>setVisable(!visable)}  className='span'  /> 
+             : <VisibilityIcon onClick={()=>setVisable(!visable)}  className='span'/> }
+              <TextField 
+               label="Şifre" variant="standard" name='password' type={visable ? "text" : "password"} value={password} onChange={onChange}
             sx={{
-                mt:"50px",
+                
                 width:"100%"
             }}
             />
-            <Button type="submit" size='small' variant='contained' sx={{mt:"40px", width:"100%"}}>
-            <LoginIcon sx={{ fontSize: 25, top:"2px", position:"relative" }} />    Giriş
+            </div>
+            <Button  startIcon={<LoginIcon fontSize='25px' />} type="submit" size='small' variant='contained' sx={{mt:"40px", width:"100%"}}>
+              Giriş
             </Button>
             <Typography sx={{textAlign:"center",fontSize:"18px",color:"white",mt:"10px"}}> Hesabın Yok mu? 
                 <Button sx={{ml:"10px","&:hover":{background:"none"}}}  startIcon={<ArrowRightIcon/>}>

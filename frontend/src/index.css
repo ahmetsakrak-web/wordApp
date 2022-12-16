@@ -12,6 +12,21 @@ body {
   font-size: 20px;
   width:100%;
 }
+.sifre{
+  position:relative;
+  
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+ 
+}
+.span{
+  position:absolute;
+  margin-right:10px;
+  margin-top:15px;
+  cursor:pointer;
+  z-index:20;
+}
 
 
 

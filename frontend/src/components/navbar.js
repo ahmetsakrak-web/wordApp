@@ -1,25 +1,17 @@
 import * as React from 'react';
 
 import { styled, useTheme } from '@mui/material/styles';
-
-
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import HomeIcon from '@mui/icons-material/Home';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import GroupIcon from '@mui/icons-material/Group';
-import LoginIcon from '@mui/icons-material/Login';
-import {Link} from "react-router-dom"
-
 import {ListItemButton, ListItemIcon, ListItemText, Typography,Box,Drawer,Toolbar,Divider, IconButton,ListItem } from '@mui/material';
+import {Menu, ChevronLeft, ChevronRight, Home, ExitToApp,Key, Group, Login} from "@mui/icons-material";
+
+import {Link} from "react-router-dom"
 
 import { mylogout, reset } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 
 
-const drawerWidth = 240;
+const drawerWidth = 255;
 
 
 
@@ -35,7 +27,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-
+const passwordHandle =()=>{
+  console.log("clicked");
+}
 
 
 
@@ -79,7 +73,7 @@ export const  Navbar=()=> {
               "&:hover":{
                 background:"black"}}}>
 
-            <MenuIcon />
+            <Menu />
 
           </IconButton>
           
@@ -113,28 +107,37 @@ export const  Navbar=()=> {
                   </Typography>
           </ListItem>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
         </DrawerHeader>
         <Divider />
        
          {/* Links  */}
         {
-        user ? (
+        user && (
           <>
           <ListItem>
             <ListItemButton>
             <ListItemIcon>
-              <HomeIcon />
+              <Home />
             </ListItemIcon>
               <Link to={`/`} className="navLink"><ListItemText>Anasayfa</ListItemText></Link>
+            </ListItemButton>
+          </ListItem> 
+
+          <ListItem>
+            <ListItemButton onClick={passwordHandle}>
+            <ListItemIcon>
+              <Key />
+            </ListItemIcon>
+              <ListItemText>Şifreni Değiştir</ListItemText>
             </ListItemButton>
           </ListItem> 
 
           <ListItem onClick={onLogout}>
               <ListItemButton>
                 <ListItemIcon>
-                  <ExitToAppIcon />
+                  <ExitToApp />
                 </ListItemIcon>
                   <Typography >
                     Çıkış
@@ -143,32 +146,7 @@ export const  Navbar=()=> {
           </ListItem>
 
           </>
-         ) :
-       (<>
-          
-          <ListItem>
-          <Link to={`/login`} className="navLink">
-            <ListItemButton xs={{width:"100%"}}>
-            <ListItemIcon>
-              <LoginIcon />
-            </ListItemIcon>
-              <ListItemText>Giriş</ListItemText>
-            </ListItemButton>
-            </Link>
-          </ListItem> 
-
-          <ListItem>
-          <Link to={`/register`} className="navLink">
-            <ListItemButton>
-            <ListItemIcon>
-              <GroupIcon />
-            </ListItemIcon>
-              <ListItemText>Kayıt Ol</ListItemText>
-            </ListItemButton>
-            </Link>
-          </ListItem> 
-        </>) 
-        }
+         )}
          
    
        

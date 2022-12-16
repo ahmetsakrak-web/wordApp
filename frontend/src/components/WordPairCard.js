@@ -1,11 +1,11 @@
 import React from 'react'
 import { Typography, Card } from '@mui/material'
-import { indigo } from '@mui/material/colors';
+import { blue, indigo } from '@mui/material/colors';
 import {capitalizeFirstLetter, deleteWordPair} from "./utilities"
 import { useSelector, useDispatch } from 'react-redux';
 import {Clear} from '@mui/icons-material';
 import { deleteWord } from '../features/collection/collectionSlice';
-import { textAlign } from '@mui/system';
+
 
 const WordPairCard = ({setEditMode, word, definition, _id, }) => {
 
@@ -28,11 +28,11 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
         const data = await deleteWordPair(collection._id, _id, user.token)
        dispatch(deleteWord(data)) 
     }
-  
+  console.log(collection.cColor.backgroundColor)
   
   
   return (
-    <Card     className='cardAnime' onClick={()=>editSwitch( _id)}  sx={{
+    <Card className='cardAnime' onClick={()=>editSwitch( _id)}  sx={{
         borderRadius:"20px",
         position:"relative",
         padding:"1rem",
@@ -62,8 +62,7 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
                 
                 <Typography sx={{
                     width:"100%",
-                    
-                   
+                    fontWeight:"600",
                 }} 
                 fontWeight="fontWeightBold" 
                 color={collection.cColor.color}  
@@ -74,15 +73,22 @@ const WordPairCard = ({setEditMode, word, definition, _id, }) => {
                 <Typography  
                 fontWeight="fontWeightBold"  
                 sx={{
-                
-                width:"100%", 
-                }}
-                color="aciklamaRenk"
+                        ...((
+                            collection.cColor.backgroundColor==="#00563B" ||
+                            collection.cColor.backgroundColor==="black"   ||
+                            collection.cColor.backgroundColor==="#153462"
+                            )   && {color:blue[300]}),
+                        ...((
+                            collection.cColor.backgroundColor==="#500000" ||
+                            collection.cColor.backgroundColor==="#333"    ||
+                            collection.cColor.backgroundColor==="purple"  ||
+                            collection.cColor.backgroundColor==="#495464"
+                            )   && {color:blue[600]}),   
+                        ...(collection.cColor.backgroundColor==="#ff8c00" && {color:blue[800]}),
+                        width:"100%", 
+                    }}
                 variant='body1'
-                gutterBottom>
-                    {definition}
-                    
-                </Typography>
+                gutterBottom>{definition}</Typography>
   </Card>
   )
 }
