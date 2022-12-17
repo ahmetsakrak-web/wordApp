@@ -3,8 +3,9 @@ import { Typography, Button, Box, Modal, TextField, Dialog, DialogTitle, DialogA
 import { Widgets, Clear, Edit, AddRounded} from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCollections, deleteCollectionThunk, updateColor, updateName, } from '../features/collections/collectionsSlice';
-import { backgroundColors, changeColor, changeName } from './utilities';
+import { backgroundColors, changeColor, changeName, changePassword } from './utilities';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import {toast} from "react-toastify"
 
 
 
@@ -71,7 +72,7 @@ const CollectionAddModal = ({addModelOpen, setModals}) => {
   )
 }
 const CollectionAddButton =({setModals})=>{
-  return <Button sx={{width:"100%"}} variant="contained"  onClick={() => setModals(pS=>({...pS,addModelOpen:true}))}>Yeni Set Ekle</Button>
+  return <Button sx={{width:"100%"}} variant="contained"  onClick={() => setModals(pS=>({...pS, addModelOpen:true}))}>Yeni Set Ekle</Button>
  }
  
  
@@ -137,6 +138,92 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
                         variant='outlined' label="Seti Düzenle" defaultValue={updateModelOpen?.cName}
                         error={mysetE} fullWidth required 
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
+            <Button type='submit' variant='contained'>
+              <ModeEditIcon />
+            </Button>
+      </form>
+    </Box>
+</Modal>
+  )
+}
+
+
+
+
+
+
+const ChangePasswordModal = ({passwordModalOpen, setPasswordModalOpen}) => {
+  
+  const {user} = useSelector(state=> state.auth);
+  const [{oldPassword, newPassword, newPassword2}, setPasswords] = useState({oldPassword:"",newPassword:"",newPassword2:""});
+ 
+
+
+
+
+  const submitHandler = async(e)=>{
+    e.preventDefault();
+
+    if(!newPassword || !newPassword2 || !oldPassword){
+      toast.error("Boş alanları doldurun")
+     
+    }
+
+    if(newPassword !== newPassword2){
+      toast.error("Girilen yeni şifre ve şifre tekrarı birbiriyle eşleşmiyor.")
+    }else{
+    try {
+      const data = await changePassword(oldPassword, newPassword, user.token)
+      toast.success(data.message);
+      setPasswords({oldPassword:"",newPassword:"",newPassword2:""});
+      setPasswordModalOpen(false)
+    } catch (error) {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message)
+      
+    }
+    
+ 
+   
+    }
+   
+}
+
+
+
+
+    return (
+    <Modal open={passwordModalOpen} onClose={()=>setPasswordModalOpen(false)} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+    <Box sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: {xs:"300px",sm:"500px",md:"800px"},
+                bgcolor: 'secondary.main',
+                border: '2px solid #000',
+                boxShadow: 24,
+                p: 4,
+            }}>
+      <form autoComplete='off' spellCheck="false" onSubmit={submitHandler}>
+            <Typography variant='h4' component="h2" color="textSecondary" gutterBottom>
+                Şifreyi Değiştir
+            </Typography>    
+
+            <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, oldPassword:e.target.value}))} 
+                        variant='outlined' label="Eski Şifreyi Giriniz." value={oldPassword}
+                         fullWidth required 
+                        inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
+
+            <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, newPassword:e.target.value}))} 
+                        variant='outlined' label="Yeni Şifreyi Giriniz" value={newPassword}
+                         fullWidth required 
+                        inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
+            <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, newPassword2:e.target.value}))} 
+                        variant='outlined' label="Yeni Şifreyi Tekrar Giriniz" value={newPassword2}
+                         fullWidth required 
+                        inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>                          
+
             <Button type='submit' variant='contained'>
               <ModeEditIcon />
             </Button>
@@ -311,4 +398,6 @@ const SettingModal = ({setModals, collectionId,cName }) => {
 
 
 
-export  {CollectionAddModal, CollectionDeleteModal, CollectionAddButton, SettingModal, CollectionUpdateModal}
+
+
+export  {CollectionAddModal, CollectionDeleteModal, CollectionAddButton, SettingModal, CollectionUpdateModal, ChangePasswordModal}

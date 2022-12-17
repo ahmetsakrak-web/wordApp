@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux"
 import {getCollections, reset} from "../features/collections/collectionsSlice"
 
-import {CollectionAddButton, CollectionAddModal, CollectionDeleteModal, CollectionUpdateModal, SettingModal} from "../components/Modals"
+import { CollectionAddButton, CollectionAddModal, CollectionDeleteModal, CollectionUpdateModal, SettingModal} from "../components/Modals"
 import { CollectionsLoader } from '../components/Loaders';
 
 import { Typography, Container, Card, CardContent  } from '@mui/material'
@@ -55,7 +55,7 @@ const Anasayfa = () => {
   if(isLoading){
     return <CollectionsLoader/>
   }
-  
+
 
 
   return (
@@ -128,8 +128,9 @@ const Anasayfa = () => {
       <CollectionUpdateModal 
       updateModelOpen={updateModelOpen}  
       setModals={setModals} />
-      
 
+    
+      
     </Container>
   )
 }

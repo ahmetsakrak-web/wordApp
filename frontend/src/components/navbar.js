@@ -2,13 +2,14 @@ import * as React from 'react';
 
 import { styled, useTheme } from '@mui/material/styles';
 import {ListItemButton, ListItemIcon, ListItemText, Typography,Box,Drawer,Toolbar,Divider, IconButton,ListItem } from '@mui/material';
-import {Menu, ChevronLeft, ChevronRight, Home, ExitToApp,Key, Group, Login} from "@mui/icons-material";
+import {Menu, ChevronLeft, ChevronRight, Home, ExitToApp,Key} from "@mui/icons-material";
 
 import {Link} from "react-router-dom"
 
 import { mylogout, reset } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
+import { ChangePasswordModal } from './Modals';
 
 
 const drawerWidth = 255;
@@ -27,9 +28,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-const passwordHandle =()=>{
-  console.log("clicked");
-}
+
 
 
 
@@ -38,7 +37,10 @@ const passwordHandle =()=>{
 export const  Navbar=()=> {
   
   const theme = useTheme();
+
   const [open, setOpen] = React.useState(false);
+  const [passwordModalOpen, setPasswordModalOpen] = React.useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {user} = useSelector(state=> state.auth)
@@ -125,7 +127,7 @@ export const  Navbar=()=> {
             </ListItem> 
   
             <ListItem>
-              <ListItemButton onClick={passwordHandle}>
+              <ListItemButton onClick={()=>setPasswordModalOpen(true)}>
               <ListItemIcon>
                 <Key />
               </ListItemIcon>
@@ -151,6 +153,9 @@ export const  Navbar=()=> {
          
         </Drawer>
         
+        <ChangePasswordModal 
+      passwordModalOpen={passwordModalOpen}  
+      setPasswordModalOpen={setPasswordModalOpen} />
       </Box>
     );
 

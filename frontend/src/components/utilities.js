@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const URL_COLLECTION = "/api/collections/"
-const URL_COLLECTION_COLOR = "/api/collections/color/"
+
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -57,7 +57,7 @@ const deleteWordPair = async(cId, wId, token)=>{
 
 const changeColor = async(cId, cColor, token)=>{
   
-  const {data} = await axios.put(URL_COLLECTION_COLOR + cId, cColor, configBearer(token))
+  const {data} = await axios.put(URL_COLLECTION +"color/" + cId, cColor, configBearer(token))
   return data
 }
 
@@ -67,7 +67,11 @@ const changeName = async (cId, collectionName, token) => {
   return {cName:data, cId}
 }
 
+const changePassword = async (oldPassword, newPassword, token) => {
+  const {data} = await axios.post("/api/users/password", {oldPassword, newPassword}, configBearer(token))
 
+  return data
+}
 
 
 
@@ -81,7 +85,7 @@ export {
   changeColor,
   changeName,
   deleteWordPair,
-  
+  changePassword
   
 }
 

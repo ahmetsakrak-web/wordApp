@@ -72,10 +72,10 @@ const passwordChange = asyncHandler(async(req, res)=>{
         const hPassword = await bcrypt.hash(newPassword,salt);
         user.password = hPassword;
         await user.save();
-        res.status(201)
+        res.json({message:"işlem başarılı. Şifreniz Değiştirildi."}).status(201)
         }else{
             res.status(401);
-            throw new Error("Credantial Error");
+            throw new Error("İşlem Başarısız. Eski ve Yeni şifreniz eşleşmiyor.");
         }
  
     
