@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Typography, Button, Box, Modal, TextField, Dialog, DialogTitle, DialogActions, Menu, MenuItem, ListItemIcon, IconButton, Tooltip, ListItem } from '@mui/material'
+import { Typography, Button, Box, Modal, TextField, Dialog, DialogTitle, DialogActions, Menu, MenuItem, ListItemIcon, IconButton, Tooltip, ListItem, Alert } from '@mui/material'
 import { Widgets, Clear, Edit, AddRounded} from '@mui/icons-material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCollections, deleteCollectionThunk, updateColor, updateName, } from '../features/collections/collectionsSlice';
 import { backgroundColors, changeColor, changeName, changePassword } from './utilities';
@@ -153,7 +155,7 @@ const CollectionUpdateModal = ({updateModelOpen, setModals}) => {
 
 
 const ChangePasswordModal = ({passwordModalOpen, setPasswordModalOpen}) => {
-  
+  const [visable, setVisable] = useState(false);
   const {user} = useSelector(state=> state.auth);
   const [{oldPassword, newPassword, newPassword2}, setPasswords] = useState({oldPassword:"",newPassword:"",newPassword2:""});
  
@@ -208,20 +210,25 @@ const ChangePasswordModal = ({passwordModalOpen, setPasswordModalOpen}) => {
       <form autoComplete='off' spellCheck="false" onSubmit={submitHandler}>
             <Typography variant='h4' component="h2" color="textSecondary" gutterBottom>
                 Şifreyi Değiştir
-            </Typography>    
+            </Typography>
+            <Alert 
+            icon={visable  ? <VisibilityOffIcon onClick={()=>setVisable(!visable)} style={{cursor:"pointer"}} /> 
+            : <VisibilityIcon onClick={()=>setVisable(!visable)}   style={{cursor:"pointer"}}/>}
 
-            <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, oldPassword:e.target.value}))} 
-                        variant='outlined' label="Eski Şifreyi Giriniz." value={oldPassword}
-                         fullWidth required 
-                        inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
-
+            sx={{background:"none"}} severity="info">Şifreyi görmek için soldaki göz ikonuna dokun!</Alert>   
+            
+              <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, oldPassword:e.target.value}))} 
+                          variant='outlined' label="Eski Şifreyi Giriniz." value={oldPassword}
+                          fullWidth required type={visable ? "text" : "password"}
+                          inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
+            
             <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, newPassword:e.target.value}))} 
                         variant='outlined' label="Yeni Şifreyi Giriniz" value={newPassword}
-                         fullWidth required 
+                         fullWidth required type={visable ? "text" : "password"}
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>
             <TextField  onChange={(e)=>setPasswords((pS)=>({...pS, newPassword2:e.target.value}))} 
                         variant='outlined' label="Yeni Şifreyi Tekrar Giriniz" value={newPassword2}
-                         fullWidth required 
+                         fullWidth required type={visable ? "text" : "password"}
                         inputProps={{ style: { color:'#fff'}}} sx={{my:1}}/>                          
 
             <Button type='submit' variant='contained'>

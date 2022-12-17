@@ -12,7 +12,7 @@ const port = process.env.PORT || 8000
 DBConnect()
 const server = express();
 server.use(express.json());
-server.use(express.urlencoded({extended:false}));
+
 
 server.use("/api/users", require("./routes/userR"));
 server.use("/api/collections", require("./routes/collectionR"));

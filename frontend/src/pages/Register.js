@@ -122,16 +122,14 @@ export const Register = () => {
             }} />
             </div>
 
-            <div className='sifre'>
-             { visable  ? <VisibilityOffIcon onClick={()=>setVisable(!visable)} className='span'/> 
-             : <VisibilityIcon onClick={()=>setVisable(!visable)}  className='span'/> }
+           
               <TextField 
                label="Şifreyi tekrar giriniz" variant="standard" name='password2' type={visable ? "text" : "password"} value={password2} onChange={onChange}
             sx={{
                 mt:"20px",
                 width:"100%"
             }} />
-            </div>
+            
 
               <Button startIcon={<AccountBoxIcon  sx={{fontSize:"60px"}}/>} type='submit' size='small' variant='contained' sx={{mt:"40px", width:"100%"}}>
          
